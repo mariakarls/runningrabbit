@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class NavigationViewController: UIViewController {
 
     /*
     override func viewDidLoad() {
