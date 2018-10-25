@@ -11,22 +11,43 @@ import UIKit
 
 class GameViewController: UIViewController {
 
-    // Hide back button :
-    // https://freakycoder.com/ios-notes-23-how-to-hide-back-button-on-navigationbar-17fb5dfb2b8
+    @objc func cannotRotate() -> Void {}
+
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Hide the navigation bar on the this view controller
+        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //appDelegate.enableAllOrientation = false
+        
         //self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        cannotRotate()
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Show the navigation bar on other view controllers
+        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //appDelegate.enableAllOrientation = true
+        
+        //let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        //UIDevice.current.setValue(value, forKey: "orientation")
+        
+        if (self.isMovingFromParentViewController) {
+            UIDevice.current.setValue(Int(UIInterfaceOrientation.landscapeLeft.rawValue), forKey: "orientation")
+        }
+        
         //self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        
     }
+    
     
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NavigationViewController: UIViewController {
+class MenuViewController: UIViewController {
 
     // Image as background
     // https://stackoverflow.com/questions/27197799/xcode-6-how-to-make-an-image-view-fill-the-screen-on-all-devices-auto-layout-n
