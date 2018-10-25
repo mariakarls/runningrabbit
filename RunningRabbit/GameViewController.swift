@@ -8,46 +8,51 @@
 
 import Foundation
 import UIKit
+import SpriteKit
 
 class GameViewController: UIViewController {
 
-    @objc func cannotRotate() -> Void {}
-
-
+    // Bunny sprite
+    // https://opengameart.org/content/bunny-rabbit-lpc-style-for-pixelfarm
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //appDelegate.enableAllOrientation = false
-        
-        //self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        /*
+        let scene = GameScene(size: view.bounds.size)
+        let skView = view as! SKView
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .resizeFill
+        skView.presentScene(scene)
+ */
         
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    
+    
+    // Rotational functions
+    
+    @objc func cannotRotate() -> Void {}
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         cannotRotate()
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //appDelegate.enableAllOrientation = true
-        
-        //let value = UIInterfaceOrientation.landscapeLeft.rawValue
-        //UIDevice.current.setValue(value, forKey: "orientation")
-        
         if (self.isMovingFromParentViewController) {
             UIDevice.current.setValue(Int(UIInterfaceOrientation.landscapeLeft.rawValue), forKey: "orientation")
         }
-        
-        //self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        
     }
-    
+
     
 }
 
