@@ -12,6 +12,7 @@
 		4C8CA6222180F6D70091B872 /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8CA6212180F6D70091B872 /* HighScore.swift */; };
 		4C8CA62421819CC00091B872 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8CA62321819CC00091B872 /* AppUtility.swift */; };
 		4C8CA6262181BDA90091B872 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8CA6252181BDA90091B872 /* GameScene.swift */; };
+		4C937300218F7C8C00AF2863 /* DustBunnyImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */; };
 		4CC0EE95216F255700246421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0EE94216F255700246421 /* AppDelegate.swift */; };
 		4CC0EE97216F255700246421 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0EE96216F255700246421 /* MenuViewController.swift */; };
 		4CC0EE9A216F255700246421 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0EE98216F255700246421 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		4C8CA6212180F6D70091B872 /* HighScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
 		4C8CA62321819CC00091B872 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		4C8CA6252181BDA90091B872 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = DustBunnyImages.atlas; sourceTree = "<group>"; };
 		4CC0EE91216F255700246421 /* RunningRabbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunningRabbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC0EE94216F255700246421 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CC0EE96216F255700246421 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 		4CC0EE93216F255700246421 /* RunningRabbit */ = {
 			isa = PBXGroup;
 			children = (
+				4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */,
 				4CC0EE98216F255700246421 /* Main.storyboard */,
 				4CC0EE96216F255700246421 /* MenuViewController.swift */,
 				4C50771A216F3F2F00BDC6E0 /* GameViewController.swift */,
@@ -156,6 +159,7 @@
 			files = (
 				4CC0EE9F216F255700246421 /* LaunchScreen.storyboard in Resources */,
 				4CC0EE9C216F255700246421 /* Assets.xcassets in Resources */,
+				4C937300218F7C8C00AF2863 /* DustBunnyImages.atlas in Resources */,
 				4CC0EE9A216F255700246421 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
