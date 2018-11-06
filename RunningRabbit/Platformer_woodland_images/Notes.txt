@@ -1,0 +1,9 @@
+Font Suggestion: 
+Arial Rounded
+Color: 492D10
+Drop shadow color: A57B51
+
+
+Stretchable blocks
+Left end cap: 12 pixels and @2x
+Right end cap: 18 pixels and @2x

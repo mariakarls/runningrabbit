@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C3887D32191802D001CA924 /* Platformer_woodland_images in Resources */ = {isa = PBXBuildFile; fileRef = 4C3887D22191802C001CA924 /* Platformer_woodland_images */; };
+		4C3887E121918073001CA924 /* Bonus_Items_images in Resources */ = {isa = PBXBuildFile; fileRef = 4C3887E021918073001CA924 /* Bonus_Items_images */; };
 		4C507719216F3F1C00BDC6E0 /* HighScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C507718216F3F1C00BDC6E0 /* HighScoreViewController.swift */; };
 		4C50771B216F3F2F00BDC6E0 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C50771A216F3F2F00BDC6E0 /* GameViewController.swift */; };
 		4C8CA6222180F6D70091B872 /* HighScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8CA6212180F6D70091B872 /* HighScore.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C3887D22191802C001CA924 /* Platformer_woodland_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Platformer_woodland_images; sourceTree = "<group>"; };
+		4C3887E021918073001CA924 /* Bonus_Items_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Bonus_Items_images; sourceTree = "<group>"; };
 		4C507718216F3F1C00BDC6E0 /* HighScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreViewController.swift; sourceTree = "<group>"; };
 		4C50771A216F3F2F00BDC6E0 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		4C8CA6212180F6D70091B872 /* HighScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScore.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 		4CC0EE93216F255700246421 /* RunningRabbit */ = {
 			isa = PBXGroup;
 			children = (
+				4C3887E021918073001CA924 /* Bonus_Items_images */,
+				4C3887D22191802C001CA924 /* Platformer_woodland_images */,
 				4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */,
 				4CC0EE98216F255700246421 /* Main.storyboard */,
 				4CC0EE96216F255700246421 /* MenuViewController.swift */,
@@ -158,7 +164,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC0EE9F216F255700246421 /* LaunchScreen.storyboard in Resources */,
+				4C3887E121918073001CA924 /* Bonus_Items_images in Resources */,
 				4CC0EE9C216F255700246421 /* Assets.xcassets in Resources */,
+				4C3887D32191802D001CA924 /* Platformer_woodland_images in Resources */,
 				4C937300218F7C8C00AF2863 /* DustBunnyImages.atlas in Resources */,
 				4CC0EE9A216F255700246421 /* Main.storyboard in Resources */,
 			);

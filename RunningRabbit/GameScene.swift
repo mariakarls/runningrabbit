@@ -21,6 +21,14 @@ class GameScene: SKScene {
     // Walking bear tutorial:
     // https://www.raywenderlich.com/144-spritekit-animations-and-texture-atlases-in-swift
     
+    struct PhysicsCategory {
+        static let none      : UInt32 = 0
+        static let all       : UInt32 = UInt32.max
+        static let bunny     : UInt32 = 1
+        static let block     : UInt32 = 2
+        static let diamond   : UInt32 = 3
+    }
+    
     private var bunny = SKSpriteNode()
     var background = SKSpriteNode(imageNamed: "background")
 
@@ -32,6 +40,30 @@ class GameScene: SKScene {
         addChild(background)
         buildBunny()
         animateBunny()
+        buildBlocks()
+    }
+    
+    // would maybe be better to use optionals?
+    var bunnyPosition = CGPoint(x: 0, y: 0)
+    var blockPositions = [CGPoint]()
+    var blockHeight = 40
+    
+    override func sceneDidLoad() {
+        bunnyPosition = CGPoint(x: frame.maxX / 8, y: frame.maxY / 10)
+        blockPositions.append(CGPoint(x: (bunnyPosition.x) + frame.maxX*0.2, y: frame.maxY/10))
+        blockPositions.append(CGPoint(x: (bunnyPosition.x) + frame.maxX*0.4, y: frame.maxY/10 + CGFloat(2*blockHeight)))
+    }
+
+    func buildBlocks() {
+        let block1 = SKSpriteNode(imageNamed: "block_grass")
+        //block1.size = CGSize(width: blockHeight, height: blockHeight)
+        block1.position = blockPositions[0]
+        addChild(block1)
+        
+        let block2 = SKSpriteNode(imageNamed: "block_grass")
+        //block2.size = CGSize(width: blockHeight, height: blockHeight)
+        block2.position = blockPositions[1]
+        addChild(block2)
     }
     
     func buildBunny() {
@@ -48,9 +80,36 @@ class GameScene: SKScene {
         
         let firstFrameTexture = bunnyWalkingFrames[0]
         bunny = SKSpriteNode(texture: firstFrameTexture)
-        bunny.position = CGPoint(x: frame.maxX / 8, y: frame.maxY / 5)
+        bunny.position = CGPoint(x: 100, y: 70) //bunnyPosition
         bunny.xScale = bunny.xScale * -1;
+        //bunny.size = CGSize(width: dust height: blockHeight)
+        
+        /*
+        bunny.physicsBody = SKPhysicsBody(rectangleOf: bunny.size) // size is nil
+        bunny.physicsBody?.isDynamic = true
+        bunny.physicsBody?.categoryBitMask = PhysicsCategory.bunny
+        bunny.physicsBody?.contactTestBitMask = PhysicsCategory.diamond
+        bunny.physicsBody?.collisionBitMask = PhysicsCategory.none // not sure if this is correct ?
+        */
         addChild(bunny)
+        
+        
+        // Determine speed of the monster
+        let actualDuration = 10 // random(min: CGFloat(2.0), max: CGFloat(4.0))
+        
+        // Create the actions
+        let actionMove = SKAction.move(to: CGPoint(x: frame.maxX, y: bunny.position.y), duration: TimeInterval(actualDuration))
+        let actionMoveDone = SKAction.removeFromParent()
+        /*
+        let loseAction = SKAction.run() { [weak self] in
+            guard let `self` = self else { return }
+            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+            let gameOverScene = GameOverScene(size: self.size, won: false)
+            self.view?.presentScene(gameOverScene, transition: reveal)
+        }
+ */
+        bunny.run(SKAction.sequence([actionMove, /*loseAction,*/ actionMoveDone]))
+        
     }
     
     func animateBunny() {
@@ -68,11 +127,19 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first!
-        let location = touch.location(in: self)
-        moveBunny(location: location)
+        bunnyJump()
+        //let touch = touches.first!
+        //let location = touch.location(in: self)
+        //moveBunny(location: location)
     }
     
+    func bunnyJump() {
+        
+        let location = CGPoint(x: bunny.position.x, y: bunny.position.y + frame.maxY*0.5)
+        let moveAction = SKAction.move(to: location, duration:(TimeInterval(10)))
+        let moveActionWithDone = SKAction.sequence([moveAction])
+        bunny.run(moveActionWithDone, withKey:"bunnyJumping")
+    }
     
     func moveBunny(location: CGPoint) {
         var multiplierForDirection: CGFloat
