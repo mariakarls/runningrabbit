@@ -108,7 +108,7 @@ class GameScene: SKScene {
             self.view?.presentScene(gameOverScene, transition: reveal)
         }
  */
-        bunny.run(SKAction.sequence([actionMove, /*loseAction,*/ actionMoveDone]))
+        bunny.run(SKAction.sequence([actionMove, /*loseAction,*/ actionMoveDone])/*, withKey:"bunnyRunning"*/)
         
     }
     
@@ -135,9 +135,11 @@ class GameScene: SKScene {
     
     func bunnyJump() {
         
-        let location = CGPoint(x: bunny.position.x, y: bunny.position.y + frame.maxY*0.5)
-        let moveAction = SKAction.move(to: location, duration:(TimeInterval(10)))
-        let moveActionWithDone = SKAction.sequence([moveAction])
+        let location = CGPoint(x: bunny.position.x, y: bunny.position.y + frame.maxY*0.1)
+        let locationDown = CGPoint(x: bunny.position.x, y: bunny.position.y)
+        let moveActionUp = SKAction.move(to: location, duration:(TimeInterval(3)))
+        let moveActionDown = SKAction.move(to: locationDown, duration:(TimeInterval(1)))
+        let moveActionWithDone = SKAction.sequence([moveActionUp, moveActionDown])
         bunny.run(moveActionWithDone, withKey:"bunnyJumping")
     }
     
