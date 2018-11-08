@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "BG_Jungle_tallvert_bg_1136x2048.png",
+      "filename" : "statue_05.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "statue_05@2x.png",
       "scale" : "2x"
     },
     {

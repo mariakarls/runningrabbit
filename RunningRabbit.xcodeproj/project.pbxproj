@@ -20,6 +20,11 @@
 		4CC0EE9A216F255700246421 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0EE98216F255700246421 /* Main.storyboard */; };
 		4CC0EE9C216F255700246421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0EE9B216F255700246421 /* Assets.xcassets */; };
 		4CC0EE9F216F255700246421 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0EE9D216F255700246421 /* LaunchScreen.storyboard */; };
+		4CE85C9A21941EF7002970DE /* Icons_Jungle_images in Resources */ = {isa = PBXBuildFile; fileRef = 4CE85C9621941EF7002970DE /* Icons_Jungle_images */; };
+		4CE85C9B21941EF7002970DE /* BG_Jungle_1_hor_rpt_Images in Resources */ = {isa = PBXBuildFile; fileRef = 4CE85C9721941EF7002970DE /* BG_Jungle_1_hor_rpt_Images */; };
+		4CE85C9C21941EF7002970DE /* Char_Monkey_Free_Images in Resources */ = {isa = PBXBuildFile; fileRef = 4CE85C9821941EF7002970DE /* Char_Monkey_Free_Images */; };
+		4CE85C9D21941EF7002970DE /* BG_Jungle_1_vert_Images in Resources */ = {isa = PBXBuildFile; fileRef = 4CE85C9921941EF7002970DE /* BG_Jungle_1_vert_Images */; };
+		4CE85CB021942752002970DE /* MonkeyImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4CE85CAF21942752002970DE /* MonkeyImages.atlas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +43,11 @@
 		4CC0EE9B216F255700246421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CC0EE9E216F255700246421 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CC0EEA0216F255700246421 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CE85C9621941EF7002970DE /* Icons_Jungle_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Icons_Jungle_images; sourceTree = "<group>"; };
+		4CE85C9721941EF7002970DE /* BG_Jungle_1_hor_rpt_Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BG_Jungle_1_hor_rpt_Images; sourceTree = "<group>"; };
+		4CE85C9821941EF7002970DE /* Char_Monkey_Free_Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Char_Monkey_Free_Images; sourceTree = "<group>"; };
+		4CE85C9921941EF7002970DE /* BG_Jungle_1_vert_Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BG_Jungle_1_vert_Images; sourceTree = "<group>"; };
+		4CE85CAF21942752002970DE /* MonkeyImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = MonkeyImages.atlas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +89,8 @@
 		4CC0EE93216F255700246421 /* RunningRabbit */ = {
 			isa = PBXGroup;
 			children = (
+				4CE85CAF21942752002970DE /* MonkeyImages.atlas */,
+				4CE85C9521941EB6002970DE /* JungleMonkeyImages */,
 				4C3887E021918073001CA924 /* Bonus_Items_images */,
 				4C3887D22191802C001CA924 /* Platformer_woodland_images */,
 				4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */,
@@ -102,6 +114,17 @@
 				4CC0EE9D216F255700246421 /* LaunchScreen.storyboard */,
 			);
 			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		4CE85C9521941EB6002970DE /* JungleMonkeyImages */ = {
+			isa = PBXGroup;
+			children = (
+				4CE85C9721941EF7002970DE /* BG_Jungle_1_hor_rpt_Images */,
+				4CE85C9921941EF7002970DE /* BG_Jungle_1_vert_Images */,
+				4CE85C9821941EF7002970DE /* Char_Monkey_Free_Images */,
+				4CE85C9621941EF7002970DE /* Icons_Jungle_images */,
+			);
+			path = JungleMonkeyImages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,10 +187,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC0EE9F216F255700246421 /* LaunchScreen.storyboard in Resources */,
+				4CE85C9D21941EF7002970DE /* BG_Jungle_1_vert_Images in Resources */,
+				4CE85C9B21941EF7002970DE /* BG_Jungle_1_hor_rpt_Images in Resources */,
+				4CE85C9C21941EF7002970DE /* Char_Monkey_Free_Images in Resources */,
+				4CE85CB021942752002970DE /* MonkeyImages.atlas in Resources */,
 				4C3887E121918073001CA924 /* Bonus_Items_images in Resources */,
 				4CC0EE9C216F255700246421 /* Assets.xcassets in Resources */,
 				4C3887D32191802D001CA924 /* Platformer_woodland_images in Resources */,
 				4C937300218F7C8C00AF2863 /* DustBunnyImages.atlas in Resources */,
+				4CE85C9A21941EF7002970DE /* Icons_Jungle_images in Resources */,
 				4CC0EE9A216F255700246421 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
