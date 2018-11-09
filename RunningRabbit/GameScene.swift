@@ -24,6 +24,7 @@ class GameScene: SKScene {
         static let statue    : UInt32 = 2
         static let diamond   : UInt32 = 3
         static let ground    : UInt32 = 4
+        static let rubble    : UInt32 = 5
     }
     
     private var monkey = SKSpriteNode()
@@ -36,12 +37,17 @@ class GameScene: SKScene {
     var statues = [SKSpriteNode]()
     private var monkeyWalkingFrames: [SKTexture] = []
     
+    var rubblePositions = [CGPoint]()
+    var rubbleHeight = CGFloat()
+    var rubbles = [SKSpriteNode]()
+    
     override func didMove(to view: SKView) {
         buildBackground()
         buildGround()
         buildMonkey()
         animateMonkey()
         buildStatues()
+        buildRubble()
     }
     
     override func sceneDidLoad() {
@@ -52,11 +58,12 @@ class GameScene: SKScene {
     func dataSetup() {
         monkeyHeight = frame.size.height/5
         statueHeight = monkeyHeight
+        rubbleHeight = frame.size.height/5
         monkeyPosition = CGPoint(x: frame.maxX / 8, y: frame.maxY / 4.25)
         groundPositionY = monkeyPosition.y - monkeyHeight
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.2, y: groundPositionY + statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.3, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.4, y: groundPositionY + 2*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.48, y: groundPositionY + 2.3*statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.8, y: groundPositionY + statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.2, y: groundPositionY + statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.3, y: groundPositionY + 1.5*statueHeight))
@@ -64,6 +71,9 @@ class GameScene: SKScene {
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.5, y: groundPositionY + 1.5*statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2.5, y: groundPositionY + statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2.6, y: groundPositionY + 1.5*statueHeight))
+        
+        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.6, y: groundPositionY + rubbleHeight))
+        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2, y: groundPositionY + rubbleHeight))
     }
 
     func buildMonkey() {
@@ -125,6 +135,21 @@ class GameScene: SKScene {
             
             statues.append(statue)
             addChild(statue)
+            
+        }
+    }
+    func buildRubble() {
+        for i in 0..<rubblePositions.count {
+            let rubble = SKSpriteNode(imageNamed: "statue_05")
+            let rubbleWidth = rubble.size.width * (statueHeight/rubble.size.height)
+            rubble.size = CGSize(width: rubbleWidth, height: rubbleHeight)
+            rubble.position = rubblePositions[i]
+            rubble.physicsBody = SKPhysicsBody(rectangleOf: rubble.size) //The size doesn't match the physic size of the rubble
+            rubble.physicsBody?.isDynamic = false
+            rubble.physicsBody?.categoryBitMask = PhysicsCategory.rubble
+            rubble.physicsBody?.affectedByGravity = false
+            statues.append(rubble)
+            addChild(rubble)
             
         }
     }
