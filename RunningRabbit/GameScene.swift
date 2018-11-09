@@ -77,10 +77,11 @@ class GameScene: SKScene {
         }
         monkeyHeight = frameHeight!/5
         statueHeight = monkeyHeight
-        rubbleHeight = frameHeight!/5
-        bananaHeight = frameHeight!/5
+        rubbleHeight = monkeyHeight
+        bananaHeight = frameHeight!/15
         monkeyPosition = CGPoint(x: frameWidth! / 8, y: frameHeight! / 4.25)
         groundPositionY = monkeyPosition.y - monkeyHeight
+        
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.2, y: groundPositionY + statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.3, y: groundPositionY + 1.5*statueHeight))
         statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + 2.3*statueHeight))
@@ -95,8 +96,8 @@ class GameScene: SKScene {
         rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.6, y: groundPositionY + rubbleHeight))
         rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2, y: groundPositionY + rubbleHeight))
         
-        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + bananaHeight*5))
-        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + bananaHeight*5))
+        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + statueHeight*4))
+        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + statueHeight*5))
     }
 
     func buildMonkey() {
@@ -164,7 +165,7 @@ class GameScene: SKScene {
     func buildRubble() {
         for i in 0..<rubblePositions.count {
             let rubble = SKSpriteNode(imageNamed: "statue_05")
-            let rubbleWidth = rubble.size.width * (statueHeight/rubble.size.height)
+            let rubbleWidth = rubble.size.width * (rubbleHeight/rubble.size.height)
             rubble.size = CGSize(width: rubbleWidth, height: rubbleHeight)
             rubble.position = rubblePositions[i]
             rubble.physicsBody = SKPhysicsBody(rectangleOf: rubble.size) //The size doesn't match the physic size of the rubble
@@ -178,11 +179,11 @@ class GameScene: SKScene {
     }
     func buildBanana() {
         for i in 0..<bananaPositions.count {
-            let banana = SKSpriteNode(imageNamed: "statue_05")
-            let bananaWidth = banana.size.width * (statueHeight/banana.size.height)
+            let banana = SKSpriteNode(imageNamed: "icon_jungle_bananabunch")
+            let bananaWidth = banana.size.width * (bananaHeight/banana.size.height)
             banana.size = CGSize(width: bananaWidth, height: bananaHeight)
             banana.position = bananaPositions[i]
-            banana.physicsBody = SKPhysicsBody(rectangleOf: banana.size) //The size doesn't match the physic size of the bananas
+            banana.physicsBody = SKPhysicsBody(rectangleOf: banana.size)
             banana.physicsBody?.isDynamic = false
             banana.physicsBody?.categoryBitMask = PhysicsCategory.banana
             banana.physicsBody?.affectedByGravity = false
