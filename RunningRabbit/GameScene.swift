@@ -61,29 +61,42 @@ class GameScene: SKScene {
         dataSetup()
     }
     
+    var frameHeight : CGFloat?
+    var frameWidth : CGFloat?
+    
     func dataSetup() {
-        monkeyHeight = frame.size.height/5
+        let orientation = UIDevice.current.orientation
+        frameHeight = frame.size.height
+        frameWidth = frame.size.width
+        if orientation == UIDeviceOrientation.portrait {
+            // We need to use the height and width of the device to setup the graphics
+            // so if the device is in portrait mode (which it should be, becuase the game is played in landscape)
+            // we use height as width and width as height
+            frameHeight = frame.size.width
+            frameWidth = frame.size.height
+        }
+        monkeyHeight = frameHeight!/5
         statueHeight = monkeyHeight
-        rubbleHeight = frame.size.height/5
-        bananaHeight = frame.size.height/5
-        monkeyPosition = CGPoint(x: frame.maxX / 8, y: frame.maxY / 4.25)
+        rubbleHeight = frameHeight!/5
+        bananaHeight = frameHeight!/5
+        monkeyPosition = CGPoint(x: frameWidth! / 8, y: frameHeight! / 4.25)
         groundPositionY = monkeyPosition.y - monkeyHeight
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.2, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.3, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.48, y: groundPositionY + 2.3*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.8, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.2, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.3, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.4, y: groundPositionY + 2*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*1.5, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2.5, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2.6, y: groundPositionY + 1.5*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.2, y: groundPositionY + statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.3, y: groundPositionY + 1.5*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + 2.3*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.8, y: groundPositionY + statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.2, y: groundPositionY + statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.3, y: groundPositionY + 1.5*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.4, y: groundPositionY + 2*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.5, y: groundPositionY + 1.5*statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.5, y: groundPositionY + statueHeight))
+        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + 1.5*statueHeight))
         
-        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.6, y: groundPositionY + rubbleHeight))
-        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2, y: groundPositionY + rubbleHeight))
+        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.6, y: groundPositionY + rubbleHeight))
+        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2, y: groundPositionY + rubbleHeight))
         
-        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*0.48, y: groundPositionY + bananaHeight*5))
-        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frame.maxX*2.6, y: groundPositionY + bananaHeight*5))
+        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + bananaHeight*5))
+        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + bananaHeight*5))
     }
 
     func buildMonkey() {
@@ -182,13 +195,13 @@ class GameScene: SKScene {
     func buildBackground() {
         background.anchorPoint = CGPoint.zero
         background.position = CGPoint(x: 0, y: 0)
-        background.size.height = frame.size.height
+        background.size.height = frameHeight!
         background.zPosition = -15
         self.addChild(background)
     }
     func buildGround() {
-        let deviceWidth = UIScreen.main.bounds.width
-        let deviceHeight = UIScreen.main.bounds.height
+        let deviceWidth = frameWidth!
+        let deviceHeight = frameHeight!
         
         var groundPoints = [CGPoint(x: 0, y: deviceHeight),
                             CGPoint(x: deviceWidth, y: deviceHeight),
