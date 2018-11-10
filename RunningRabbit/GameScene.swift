@@ -17,57 +17,23 @@ class GameScene: SKScene {
     // Walking bear tutorial: https://www.raywenderlich.com/144-spritekit-animations-and-texture-atlases-in-swift
     // Labrynth: https://www.thedroidsonroids.com/blog/ios/maze-game-with-spritekit
     
-    struct PhysicsCategory {
-        static let none      : UInt32 = 0
-        static let all       : UInt32 = UInt32.max
-        static let monkey    : UInt32 = 1
-        static let statue    : UInt32 = 2
-        static let diamond   : UInt32 = 3
-        static let ground    : UInt32 = 4
-        static let rubble    : UInt32 = 5
-        static let banana    : UInt32 = 6
-    }
-    
-    private var monkey = SKSpriteNode()
+    private var game : Game?
     var background = SKSpriteNode(imageNamed: "background_landscape")
-    var monkeyPosition = CGPoint(x: 0, y: 0)
-    var statuePositions = [CGPoint]()
-    var statueHeight = CGFloat()
-    var monkeyHeight = CGFloat()
-    var groundPositionY = CGFloat()
-    var statues = [SKSpriteNode]()
+    private var monkey : SKSpriteNode?
     private var monkeyWalkingFrames: [SKTexture] = []
-    
-    var rubblePositions = [CGPoint]()
-    var rubbleHeight = CGFloat()
-    var rubbles = [SKSpriteNode]()
-    
-    var bananaPositions = [CGPoint]()
-    var bananaHeight = CGFloat()
-    var bananas = [SKSpriteNode]()
-    
-    override func didMove(to view: SKView) {
-        buildBackground()
-        buildGround()
-        buildMonkey()
-        animateMonkey()
-        buildStatues()
-        buildRubble()
-        buildBanana()
-    }
+    private var bananas = [SKSpriteNode]()
+    private var statues = [SKSpriteNode]()
+    private var rubbles = [SKSpriteNode]()
     
     override func sceneDidLoad() {
         // Setting up the data for the game
         dataSetup()
     }
     
-    var frameHeight : CGFloat?
-    var frameWidth : CGFloat?
-    
     func dataSetup() {
         let orientation = UIDevice.current.orientation
-        frameHeight = frame.size.height
-        frameWidth = frame.size.width
+        var frameHeight = frame.size.height
+        var frameWidth = frame.size.width
         if orientation == UIDeviceOrientation.portrait {
             // We need to use the height and width of the device to setup the graphics
             // so if the device is in portrait mode (which it should be, becuase the game is played in landscape)
@@ -75,32 +41,32 @@ class GameScene: SKScene {
             frameHeight = frame.size.width
             frameWidth = frame.size.height
         }
-        monkeyHeight = frameHeight!/5
-        statueHeight = monkeyHeight
-        rubbleHeight = monkeyHeight
-        bananaHeight = frameHeight!/15
-        monkeyPosition = CGPoint(x: frameWidth! / 8, y: frameHeight! / 4.25)
-        groundPositionY = monkeyPosition.y - monkeyHeight
         
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.2, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.3, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + 2.3*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.8, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.2, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.3, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.4, y: groundPositionY + 2*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.5, y: groundPositionY + 1.5*statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.5, y: groundPositionY + statueHeight))
-        statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + 1.5*statueHeight))
-        
-        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.6, y: groundPositionY + rubbleHeight))
-        rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2, y: groundPositionY + rubbleHeight))
-        
-        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.48, y: groundPositionY + statueHeight*4))
-        bananaPositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + statueHeight*5))
+        game = Game(screneHeight: Double(frameHeight), screneWidth: Double(frameWidth),ground: Double(frameHeight / 7))
+        monkey = SKSpriteNode()
     }
 
-    func buildMonkey() {
+    override func didMove(to view: SKView) {
+        buildBackground()
+        buildGround()
+        
+        buildMonkeySprite()
+        animateMonkey()
+        buildStatueSprite()
+        buildRubbleSprite()
+        buildBananaSprite()
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        monkeyJump()
+    }
+    func monkeyJump() {
+        monkey?.physicsBody?.applyImpulse(CGVector(dx: 20.0, dy: 100.0))
+        // these values seem to work well on iPhone X but not on iPad
+    }
+    
+    // MARK: buildSprites
+    func buildMonkeySprite() {
         
         let monkeyAnimatedAtlas = SKTextureAtlas(named: "MonkeyImages")
         var runFrames: [SKTexture] = []
@@ -114,113 +80,106 @@ class GameScene: SKScene {
         
         let firstFrameTexture = monkeyWalkingFrames[0]
         monkey = SKSpriteNode(texture: firstFrameTexture)
-        monkey.position = monkeyPosition
-        let monkeyNewHeight = monkeyHeight
-        let monkeyNewWidth = monkey.size.width * (monkeyNewHeight/monkey.size.height)
-        monkey.size = CGSize(width: monkeyNewWidth, height: monkeyNewHeight)
+        monkey?.position = CGPoint(x: (game?.monkey?.startPosX)!, y: (game?.monkey?.startPosY)!)
+        let monkeyNewHeight = game?.monkey?.CGFloatHeight
+        let monkeyNewWidth = game?.monkey?.CGFloatWidth(
+            oldHeight: (monkey?.size.height)!,
+            oldWidth: (monkey?.size.width)!)
+        monkey?.size = CGSize(width: monkeyNewWidth!, height: monkeyNewHeight!)
         
-        monkey.physicsBody = SKPhysicsBody(rectangleOf: monkey.size)
-        monkey.physicsBody?.categoryBitMask = PhysicsCategory.monkey
-        monkey.physicsBody?.collisionBitMask = PhysicsCategory.ground | PhysicsCategory.statue | PhysicsCategory.rubble
-        monkey.physicsBody?.affectedByGravity = true
-        monkey.physicsBody?.allowsRotation = false
-        monkey.physicsBody?.velocity.dx = 20
+        monkey?.physicsBody = SKPhysicsBody(rectangleOf: (monkey?.size)!)
+        monkey?.physicsBody?.categoryBitMask = Game.PhysicsCategory.monkey
+        monkey?.physicsBody?.collisionBitMask = Game.PhysicsCategory.ground | Game.PhysicsCategory.statue | Game.PhysicsCategory.rubble
+        monkey?.physicsBody?.affectedByGravity = true
+        monkey?.physicsBody?.allowsRotation = false
+        monkey?.physicsBody?.velocity.dx = 20
         
-        addChild(monkey)
+        addChild(monkey!)
     }
-    
     func animateMonkey() {
         // have monkey run in place
-        monkey.run(SKAction.repeatForever(
+        monkey?.run(SKAction.repeatForever(
             SKAction.animate(with: monkeyWalkingFrames, timePerFrame: 0.05, resize: false, restore: true)),
-                 withKey:"walkingInPlaceMonkey")
+                    withKey:"walkingInPlaceMonkey")
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        monkeyJump()
-    }
-    
-    func monkeyJump() {
-        monkey.physicsBody?.applyImpulse(CGVector(dx: 20.0, dy: 100.0))
-        // these values seem to work well on iPhone X but not on iPad
-    }
-    
-    func buildStatues() {
-        for i in 0..<statuePositions.count {
-            let statue = SKSpriteNode(imageNamed: "statue_00")
-            let statueWidth = statue.size.width * (statueHeight/statue.size.height)
-            statue.size = CGSize(width: statueWidth, height: statueHeight)
-            statue.position = statuePositions[i]
+    func buildStatueSprite() {
+        for statue in (game?.statues)! {
+            let statueSprite = SKSpriteNode(imageNamed: "statue_00")
+            let statueWidth = statue.CGFloatWidth(oldHeight: statueSprite.size.height,
+                                                  oldWidth: statueSprite.size.width)
+            statueSprite.size = CGSize(width: statueWidth!, height: statue.CGFloatHeight!)
+            statueSprite.position = CGPoint(x: statue.startPosX!, y: statue.startPosY!)
             
-            statue.physicsBody = SKPhysicsBody(rectangleOf: statue.size)
-            statue.physicsBody?.isDynamic = false
-            statue.physicsBody?.categoryBitMask = PhysicsCategory.statue
-            statue.physicsBody?.affectedByGravity = false
+            statueSprite.physicsBody = SKPhysicsBody(rectangleOf: statueSprite.size)
+            statueSprite.physicsBody?.isDynamic = false
+            statueSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.statue
+            statueSprite.physicsBody?.affectedByGravity = false
             
-            statues.append(statue)
-            addChild(statue)
-            
+            statues.append(statueSprite)
+            addChild(statueSprite)
         }
     }
-    func buildRubble() {
-        for i in 0..<rubblePositions.count {
-            let rubble = SKSpriteNode(imageNamed: "statue_05")
-            let rubbleWidth = rubble.size.width * (rubbleHeight/rubble.size.height)
-            rubble.size = CGSize(width: rubbleWidth, height: rubbleHeight)
-            rubble.position = rubblePositions[i]
-            rubble.physicsBody = SKPhysicsBody(rectangleOf: rubble.size) //The size doesn't match the physic size of the rubble
-            rubble.physicsBody?.isDynamic = false
-            rubble.physicsBody?.categoryBitMask = PhysicsCategory.rubble
-            rubble.physicsBody?.affectedByGravity = false
-            rubbles.append(rubble)
-            addChild(rubble)
+    func buildRubbleSprite() {
+        for rubble in (game?.rubbles)! {
+            let rubbleSprite = SKSpriteNode(imageNamed: "statue_05")
+            let rubbleWidth = rubble.CGFloatWidth(oldHeight: rubbleSprite.size.height, oldWidth: rubbleSprite.size.width)
+            rubbleSprite.size = CGSize(width: rubbleWidth!, height: rubble.CGFloatHeight!)
+            rubbleSprite.position = CGPoint(x: rubble.startPosX!, y: rubble.startPosY!)
             
+            rubbleSprite.physicsBody = SKPhysicsBody(rectangleOf: rubbleSprite.size)
+            rubbleSprite.physicsBody?.isDynamic = false
+            rubbleSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.rubble
+            rubbleSprite.physicsBody?.affectedByGravity = false
+            
+            rubbles.append(rubbleSprite)
+            addChild(rubbleSprite)
         }
     }
-    func buildBanana() {
-        for i in 0..<bananaPositions.count {
-            let banana = SKSpriteNode(imageNamed: "icon_jungle_bananabunch")
-            let bananaWidth = banana.size.width * (bananaHeight/banana.size.height)
-            banana.size = CGSize(width: bananaWidth, height: bananaHeight)
-            banana.position = bananaPositions[i]
-            banana.physicsBody = SKPhysicsBody(rectangleOf: banana.size)
-            banana.physicsBody?.isDynamic = false
-            banana.physicsBody?.categoryBitMask = PhysicsCategory.banana
-            banana.physicsBody?.affectedByGravity = false
-            bananas.append(banana)
-            addChild(banana)
+    func buildBananaSprite() {
+        for banana in (game?.bananas)! {
+            let bananaSprite = SKSpriteNode(imageNamed: "icon_jungle_bananabunch")
+            let bananaWidth = banana.CGFloatWidth(oldHeight: bananaSprite.size.height, oldWidth: bananaSprite.size.width)
+            bananaSprite.size = CGSize(width: bananaWidth!, height: banana.CGFloatHeight!)
+            bananaSprite.position = CGPoint(x: banana.startPosX!, y: banana.startPosY!)
+
+            bananaSprite.physicsBody = SKPhysicsBody(rectangleOf: bananaSprite.size)
+            bananaSprite.physicsBody?.isDynamic = false
+            bananaSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana
+            bananaSprite.physicsBody?.affectedByGravity = false
             
+            bananas.append(bananaSprite)
+            addChild(bananaSprite)
         }
     }
     
+    // MARK: build background
     func buildBackground() {
         background.anchorPoint = CGPoint.zero
         background.position = CGPoint(x: 0, y: 0)
-        background.size.height = frameHeight!
+        background.size.height = (game?.CGFloatHeight)!
         background.zPosition = -15
         self.addChild(background)
     }
     func buildGround() {
-        let deviceWidth = frameWidth!
-        let deviceHeight = frameHeight!
+        let deviceWidth = game?.width
+        let deviceHeight = game?.height
         
-        var groundPoints = [CGPoint(x: 0, y: deviceHeight),
-                            CGPoint(x: deviceWidth, y: deviceHeight),
-                            CGPoint(x: deviceWidth, y: 4*groundPositionY),
-                            CGPoint(x: 0, y: 4*groundPositionY),
-                            CGPoint(x: 0, y: deviceHeight)] // closing the box
+        var groundPoints = [CGPoint(x: 0, y: deviceHeight!),
+                            CGPoint(x: deviceWidth!, y: deviceHeight!),
+                            CGPoint(x: deviceWidth!, y: (game?.groundY)!),
+                            CGPoint(x: 0, y: (game?.groundY)!),
+                            CGPoint(x: 0, y: deviceHeight!)] // closing the box
         let ground = SKShapeNode(points: &groundPoints, count: groundPoints.count)
         //ground.fillColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
         //ground.strokeColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
         ground.lineWidth = 5
         ground.physicsBody = SKPhysicsBody(edgeChainFrom: ground.path!)
-        ground.physicsBody?.categoryBitMask = PhysicsCategory.ground
+        ground.physicsBody?.categoryBitMask = Game.PhysicsCategory.ground
         ground.physicsBody?.restitution = 0.75
         ground.physicsBody?.isDynamic = false
         ground.physicsBody?.restitution = 0
         addChild(ground)
     }
-    
     
     // Didn't work to create a variable for the movment of the background and statues
     //let changeInBackground = 2.0
@@ -249,6 +208,24 @@ class GameScene: SKScene {
             background.position = CGPoint(x: background.position.x, y: background.position.y)
         }
          */
-        
+    }
+    
+}
+
+extension Game {
+    var CGFloatHeight: CGFloat {
+        return CGFloat(height)
+    }
+    var CGFloatWidth: CGFloat {
+        return CGFloat(width)
+    }
+}
+
+extension Sprite {
+    var CGFloatHeight : CGFloat? {
+        return CGFloat(height!)
+    }
+    func CGFloatWidth(oldHeight : CGFloat, oldWidth : CGFloat) -> CGFloat? {
+        return CGFloat(Double(oldWidth) * height! / Double(oldHeight))
     }
 }
