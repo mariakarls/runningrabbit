@@ -38,7 +38,7 @@ class Game {
         
         self.monkey = Monkey(height: Double(screneHeight/5),
                              x: screneWidth / 8,
-                             y: groundY)
+                             y: groundY + (screneHeight/5)/2)
         
         self.bananas = [Banana]()
         self.statues = [Statue]()

@@ -61,7 +61,7 @@ class GameScene: SKScene {
         monkeyJump()
     }
     func monkeyJump() {
-        monkey?.physicsBody?.applyImpulse(CGVector(dx: 20.0, dy: 100.0))
+        monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/100, dy: (game?.statueHeight)!/2.0))
         // these values seem to work well on iPhone X but not on iPad
     }
     
@@ -87,7 +87,8 @@ class GameScene: SKScene {
             oldWidth: (monkey?.size.width)!)
         monkey?.size = CGSize(width: monkeyNewWidth!, height: monkeyNewHeight!)
         
-        monkey?.physicsBody = SKPhysicsBody(rectangleOf: (monkey?.size)!)
+        monkey?.physicsBody = SKPhysicsBody(texture: firstFrameTexture, size: (monkey?.size)!)
+        //monkey?.physicsBody = SKPhysicsBody(rectangleOf: (monkey?.size)!)
         monkey?.physicsBody?.categoryBitMask = Game.PhysicsCategory.monkey
         monkey?.physicsBody?.collisionBitMask = Game.PhysicsCategory.ground | Game.PhysicsCategory.statue | Game.PhysicsCategory.rubble
         monkey?.physicsBody?.affectedByGravity = true
@@ -114,6 +115,7 @@ class GameScene: SKScene {
             statueSprite.physicsBody?.isDynamic = false
             statueSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.statue
             statueSprite.physicsBody?.affectedByGravity = false
+            statueSprite.physicsBody?.restitution = 0
             
             statues.append(statueSprite)
             addChild(statueSprite)
@@ -130,6 +132,7 @@ class GameScene: SKScene {
             rubbleSprite.physicsBody?.isDynamic = false
             rubbleSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.rubble
             rubbleSprite.physicsBody?.affectedByGravity = false
+            rubbleSprite.physicsBody?.restitution = 0
             
             rubbles.append(rubbleSprite)
             addChild(rubbleSprite)
@@ -146,6 +149,7 @@ class GameScene: SKScene {
             bananaSprite.physicsBody?.isDynamic = false
             bananaSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana
             bananaSprite.physicsBody?.affectedByGravity = false
+            bananaSprite.physicsBody?.restitution = 0
             
             bananas.append(bananaSprite)
             addChild(bananaSprite)
