@@ -69,8 +69,11 @@ class Game {
     
     private func setupBananas (bananaHeight: Double) {
         bananas.append(Banana(height: bananaHeight,
+                              x: (monkey?.startPosX)! + 50,
+                              y: groundY + (monkey?.height)!))
+        bananas.append(Banana(height: bananaHeight,
                              x: (monkey?.startPosX)! + width * 0.48,
-                             y: groundY + statueHeight! * 4))
+                             y: groundY + statueHeight! * 3))
         /*
         bananas.append(Banana(height: bananaHeight,
                               x: (monkey?.startPosX)! + width * 2.6,
@@ -86,13 +89,13 @@ class Game {
         
         let statueGroundY = groundY + statHeight/2
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.2,
+                              x: (monkey?.startPosX)! + width * 0.2 + 1,
                               y: statueGroundY))
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.3,
+                              x: (monkey?.startPosX)! + width * 0.3 + 1,
                               y: statueGroundY + statHeight * 0.5))
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.48,
+                              x: (monkey?.startPosX)! + width * 0.4 + 1,
                               y: statueGroundY + statHeight * 1.3))
     }
     

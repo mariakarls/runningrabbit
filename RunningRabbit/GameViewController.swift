@@ -17,6 +17,8 @@ class GameViewController: UIViewController {
     // Bunny sprite
     // https://opengameart.org/content/bunny-rabbit-lpc-style-for-pixelfarm
     
+    @IBOutlet weak var highScore: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let scene = GameScene(size: view.bounds.size)
@@ -27,6 +29,7 @@ class GameViewController: UIViewController {
         skView.showsPhysics = true
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+        
     }
     
     

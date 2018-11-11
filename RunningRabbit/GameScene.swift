@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 import UIKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Move sprite: http://mammothinteractive.com/touches-and-moving-sprites-in-xcode-spritekit-swift-crash-course-free-tutorial/
     // Monkey sprite from tutorial: https://www.gameartguppy.com/
@@ -24,6 +24,13 @@ class GameScene: SKScene {
     private var bananas = [SKSpriteNode]()
     private var statues = [SKSpriteNode]()
     private var rubbles = [SKSpriteNode]()
+    private var score = 0 {
+        didSet {
+            scoreLabel.text = "\(score)"
+        }
+    }
+    let scoreLabel = SKLabelNode(fontNamed: "CoolFont")
+
     
     override func sceneDidLoad() {
         // Setting up the data for the game
@@ -44,8 +51,10 @@ class GameScene: SKScene {
         
         game = Game(screneHeight: Double(frameHeight), screneWidth: Double(frameWidth),ground: Double(frameHeight / 7))
         monkey = SKSpriteNode()
+        
+        scoreLabel.position = CGPoint(x: frameWidth - frameWidth/20, y: frameHeight - frameHeight/10)
     }
-
+    
     override func didMove(to view: SKView) {
         buildBackground()
         buildGround()
@@ -55,16 +64,40 @@ class GameScene: SKScene {
         buildStatueSprite()
         buildRubbleSprite()
         buildBananaSprite()
+        addChild(scoreLabel)
+        
+        physicsWorld.contactDelegate = self
     }
-
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         monkeyJump()
     }
     func monkeyJump() {
-        monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/100, dy: (game?.statueHeight)!/2.0))
+        monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/400, dy: (game?.statueHeight)!/2.0))
         // these values seem to work well on iPhone X but not on iPad
     }
     
+    
+    // MARK: collision detection
+    func didBegin(_ contact: SKPhysicsContact) {
+        let bodyA = contact.bodyA.categoryBitMask
+        let bodyB = contact.bodyB.categoryBitMask
+        
+        if (bodyA == Game.PhysicsCategory.monkey && bodyB == Game.PhysicsCategory.banana) {
+            if let banana = contact.bodyB.node as? SKSpriteNode {
+                collectBanana(banana: banana)
+            }
+        }
+    }
+    
+    func collectBanana(banana : SKSpriteNode) {
+        score += 1
+        removeChildren(in: [banana])
+        if let index = bananas.index(of: banana) {
+            bananas.remove(at: index)
+        }
+    }
+
     // MARK: buildSprites
     func buildMonkeySprite() {
         
@@ -144,12 +177,13 @@ class GameScene: SKScene {
             let bananaWidth = banana.CGFloatWidth(oldHeight: bananaSprite.size.height, oldWidth: bananaSprite.size.width)
             bananaSprite.size = CGSize(width: bananaWidth!, height: banana.CGFloatHeight!)
             bananaSprite.position = CGPoint(x: banana.startPosX!, y: banana.startPosY!)
-
+            
             bananaSprite.physicsBody = SKPhysicsBody(rectangleOf: bananaSprite.size)
             bananaSprite.physicsBody?.isDynamic = false
             bananaSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana
             bananaSprite.physicsBody?.affectedByGravity = false
             bananaSprite.physicsBody?.restitution = 0
+            bananaSprite.physicsBody?.contactTestBitMask = Game.PhysicsCategory.monkey
             
             bananas.append(bananaSprite)
             addChild(bananaSprite)
@@ -207,10 +241,10 @@ class GameScene: SKScene {
         /*
          
          // to repeat the background
-        if(background.position.x < -background.size.width + frame.size.width)
-        {
-            background.position = CGPoint(x: background.position.x, y: background.position.y)
-        }
+         if(background.position.x < -background.size.width + frame.size.width)
+         {
+         background.position = CGPoint(x: background.position.x, y: background.position.y)
+         }
          */
     }
     
@@ -233,3 +267,4 @@ extension Sprite {
         return CGFloat(Double(oldWidth) * height! / Double(oldHeight))
     }
 }
+
