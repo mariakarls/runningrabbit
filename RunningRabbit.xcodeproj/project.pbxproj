@@ -21,6 +21,7 @@
 		4C8CA62421819CC00091B872 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8CA62321819CC00091B872 /* AppUtility.swift */; };
 		4C8CA6262181BDA90091B872 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8CA6252181BDA90091B872 /* GameScene.swift */; };
 		4C937300218F7C8C00AF2863 /* DustBunnyImages.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */; };
+		4CAFE828219CC07F005A8FFF /* icon_1_1024x1024 in Resources */ = {isa = PBXBuildFile; fileRef = 4CAFE827219CC07F005A8FFF /* icon_1_1024x1024 */; };
 		4CC0EE95216F255700246421 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0EE94216F255700246421 /* AppDelegate.swift */; };
 		4CC0EE97216F255700246421 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0EE96216F255700246421 /* MenuViewController.swift */; };
 		4CC0EE9A216F255700246421 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0EE98216F255700246421 /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		4C8CA62321819CC00091B872 /* AppUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtility.swift; sourceTree = "<group>"; };
 		4C8CA6252181BDA90091B872 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		4C9372FF218F7C8C00AF2863 /* DustBunnyImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = DustBunnyImages.atlas; sourceTree = "<group>"; };
+		4CAFE827219CC07F005A8FFF /* icon_1_1024x1024 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icon_1_1024x1024; sourceTree = "<group>"; };
 		4CC0EE91216F255700246421 /* RunningRabbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunningRabbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC0EE94216F255700246421 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CC0EE96216F255700246421 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 		4CE85C9521941EB6002970DE /* JungleMonkeyImages */ = {
 			isa = PBXGroup;
 			children = (
+				4CAFE827219CC07F005A8FFF /* icon_1_1024x1024 */,
 				4CE85C9721941EF7002970DE /* BG_Jungle_1_hor_rpt_Images */,
 				4CE85C9921941EF7002970DE /* BG_Jungle_1_vert_Images */,
 				4CE85C9821941EF7002970DE /* Char_Monkey_Free_Images */,
@@ -206,6 +209,7 @@
 			files = (
 				4CC0EE9F216F255700246421 /* LaunchScreen.storyboard in Resources */,
 				4CE85C9D21941EF7002970DE /* BG_Jungle_1_vert_Images in Resources */,
+				4CAFE828219CC07F005A8FFF /* icon_1_1024x1024 in Resources */,
 				4CE85C9B21941EF7002970DE /* BG_Jungle_1_hor_rpt_Images in Resources */,
 				4CE85C9C21941EF7002970DE /* Char_Monkey_Free_Images in Resources */,
 				4CE85CB021942752002970DE /* MonkeyImages.atlas in Resources */,

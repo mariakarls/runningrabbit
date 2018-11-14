@@ -69,7 +69,7 @@ class Game {
     
     private func setupBananas (bananaHeight: Double) {
         bananas.append(Banana(height: bananaHeight,
-                              x: (monkey?.startPosX)! + 50,
+                              x: (monkey?.startPosX)! + 100,
                               y: groundY + (monkey?.height)!))
         bananas.append(Banana(height: bananaHeight,
                              x: (monkey?.startPosX)! + width * 0.48,

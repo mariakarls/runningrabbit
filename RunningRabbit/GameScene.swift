@@ -73,7 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         monkeyJump()
     }
     func monkeyJump() {
-        monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/400, dy: (game?.statueHeight)!/2.0))
+        monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/500, dy: (game?.statueHeight)!/2.0))
         // these values seem to work well on iPhone X but not on iPad
     }
     
