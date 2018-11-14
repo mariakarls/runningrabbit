@@ -208,8 +208,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             CGPoint(x: 0, y: (game?.groundY)!),
                             CGPoint(x: 0, y: deviceHeight!)] // closing the box
         let ground = SKShapeNode(points: &groundPoints, count: groundPoints.count)
-        //ground.fillColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
-        //ground.strokeColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
+        ground.fillColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
+        ground.strokeColor = #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 0)
         ground.lineWidth = 5
         ground.physicsBody = SKPhysicsBody(edgeChainFrom: ground.path!)
         ground.physicsBody?.categoryBitMask = Game.PhysicsCategory.ground

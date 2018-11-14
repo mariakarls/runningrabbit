@@ -46,7 +46,7 @@ class Game {
 
         self.setupStatues(statHeight: (self.monkey?.height)!)
         self.setupBananas(bananaHeight: screneHeight / 15)
-        self.setupRubbles(rubbleHeight: (self.monkey?.height)!)
+        self.setupRubbles(rubbleHeight: (self.monkey?.height)!/3)
     }
     
     private func setupRubbles (rubbleHeight: Double) {
@@ -73,7 +73,7 @@ class Game {
                               y: groundY + (monkey?.height)!))
         bananas.append(Banana(height: bananaHeight,
                              x: (monkey?.startPosX)! + width * 0.48,
-                             y: groundY + statueHeight! * 3))
+                             y: groundY + statueHeight! * 3.3))
         /*
         bananas.append(Banana(height: bananaHeight,
                               x: (monkey?.startPosX)! + width * 2.6,
@@ -97,6 +97,7 @@ class Game {
         statues.append(Statue(height: statHeight,
                               x: (monkey?.startPosX)! + width * 0.4 + 1,
                               y: statueGroundY + statHeight * 1.3))
+        
     }
     
     var statueHeight : Double? {
