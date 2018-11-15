@@ -29,9 +29,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "\(score)"
         }
     }
-    let scoreLabel = SKLabelNode(fontNamed: "CoolFont")
+    let scoreLabel = SKLabelNode()
+    let pauseButton = SKSpriteNode(imageNamed: "pause")
+    var isPause = false
 
-    
     override func sceneDidLoad() {
         // Setting up the data for the game
         dataSetup()
@@ -52,7 +53,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         game = Game(screneHeight: Double(frameHeight), screneWidth: Double(frameWidth),ground: Double(frameHeight / 7))
         monkey = SKSpriteNode()
         
+        scoreLabel.text = "0"
         scoreLabel.position = CGPoint(x: frameWidth - frameWidth/20, y: frameHeight - frameHeight/10)
+        pauseButton.name = "pause"
+        pauseButton.size = scoreLabel.frame.size
+        pauseButton.position = CGPoint(x: frameWidth/20, y: frameHeight - frameHeight/10 + pauseButton.size.height/2)
+        pauseButton.isUserInteractionEnabled = true
     }
     
     override func didMove(to view: SKView) {
@@ -65,13 +71,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buildRubbleSprite()
         buildBananaSprite()
         addChild(scoreLabel)
+        addChild(pauseButton)
         
         physicsWorld.contactDelegate = self
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            let location = touch.location(in: self)
+            let node = self.atPoint(location)
+            if (node.name == "pause") {
+                isPause = true
+                return
+            }
+        }
         monkeyJump()
     }
+    
     func monkeyJump() {
         monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/500, dy: (game?.statueHeight)!/2.0))
         // these values seem to work well on iPhone X but not on iPad
@@ -131,6 +147,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(monkey!)
     }
     func animateMonkey() {
+        if isPause {
+            return
+        }
+        
         // have monkey run in place
         monkey?.run(SKAction.repeatForever(
             SKAction.animate(with: monkeyWalkingFrames, timePerFrame: 0.05, resize: false, restore: true)),
@@ -223,6 +243,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //let changeInBackground = 2.0
     
     override func update(_ Time: CFTimeInterval) {
+        
+        if isPause {
+            return
+        }
+        
         // Move the background and obstacles
         
         background.position = CGPoint(x: background.position.x - 2, y: background.position.y)
