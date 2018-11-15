@@ -73,7 +73,13 @@ class Game {
                               y: groundY + (monkey?.height)!))
         bananas.append(Banana(height: bananaHeight,
                              x: (monkey?.startPosX)! + width * 0.48,
-                             y: groundY + statueHeight! * 3.3))
+                             y: groundY + statueHeight! * 3))
+        bananas.append(Banana(height: bananaHeight,
+                              x: (monkey?.startPosX)! + width * 0.9,
+                              y: groundY + statueHeight! * 3))
+        bananas.append(Banana(height: bananaHeight,
+                              x: (monkey?.startPosX)! + width * 1,
+                              y: groundY + statueHeight!))
         /*
         bananas.append(Banana(height: bananaHeight,
                               x: (monkey?.startPosX)! + width * 2.6,
@@ -95,9 +101,14 @@ class Game {
                               x: (monkey?.startPosX)! + width * 0.3 + 1,
                               y: statueGroundY + statHeight * 0.5))
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.4 + 1,
+                              x: (monkey?.startPosX)! + width * 0.45 + 1,
                               y: statueGroundY + statHeight * 1.3))
-        
+        statues.append(Statue(height: statHeight,
+                              x: (monkey?.startPosX)! + width * 0.75 + 1,
+                              y: statueGroundY))
+        statues.append(Statue(height: statHeight,
+                              x: (monkey?.startPosX)! + width * 0.9 + 1,
+                              y: statueGroundY + statHeight * 1))
     }
     
     var statueHeight : Double? {
