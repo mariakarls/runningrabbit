@@ -51,7 +51,7 @@ class GameViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if (self.isMovingFromParentViewController) {
+        if (self.isMovingFromParent) {
             UIDevice.current.setValue(Int(UIInterfaceOrientation.landscapeLeft.rawValue), forKey: "orientation")
         }
     }
