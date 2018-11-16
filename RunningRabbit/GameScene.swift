@@ -24,6 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var bananas = [SKSpriteNode]()
     private var statues = [SKSpriteNode]()
     private var rubbles = [SKSpriteNode]()
+    private var diamonds = [SKSpriteNode]()
     private var score = 0 {
         didSet {
             scoreLabel.text = "\(score)"
@@ -64,6 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buildStatueSprite()
         buildRubbleSprite()
         buildBananaSprite()
+        buildDiamondSprite()
         addChild(scoreLabel)
         
         physicsWorld.contactDelegate = self
@@ -123,7 +125,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         monkey?.physicsBody = SKPhysicsBody(texture: firstFrameTexture, size: (monkey?.size)!)
         //monkey?.physicsBody = SKPhysicsBody(rectangleOf: (monkey?.size)!)
         monkey?.physicsBody?.categoryBitMask = Game.PhysicsCategory.monkey
-        monkey?.physicsBody?.collisionBitMask = Game.PhysicsCategory.ground | Game.PhysicsCategory.statue | Game.PhysicsCategory.rubble
+        monkey?.physicsBody?.collisionBitMask = Game.PhysicsCategory.ground | Game.PhysicsCategory.statue | Game.PhysicsCategory.rubble | Game.PhysicsCategory.diamond
         monkey?.physicsBody?.affectedByGravity = true
         monkey?.physicsBody?.allowsRotation = false
         monkey?.physicsBody?.velocity.dx = 20
@@ -189,6 +191,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(bananaSprite)
         }
     }
+    func buildDiamondSprite() {
+        for diamond in (game?.diamonds)! {
+            let diamondSprite = SKSpriteNode(imageNamed: "diamond_blue")
+            let diamondWidth = diamond.CGFloatWidth(oldHeight: diamondSprite.size.height, oldWidth: diamondSprite.size.width)
+            diamondSprite.size = CGSize(width: diamondWidth!, height: diamond.CGFloatHeight!)
+            diamondSprite.position = CGPoint(x: diamond.startPosX!, y: diamond.startPosY!)
+            
+            diamondSprite.physicsBody = SKPhysicsBody(rectangleOf: diamondSprite.size)
+            diamondSprite.physicsBody?.isDynamic = false
+            diamondSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana
+            diamondSprite.physicsBody?.affectedByGravity = false
+            diamondSprite.physicsBody?.restitution = 0
+            diamondSprite.physicsBody?.contactTestBitMask = Game.PhysicsCategory.monkey
+            
+            diamonds.append(diamondSprite)
+            addChild(diamondSprite)
+        }
+    }
     
     // MARK: build background
     func buildBackground() {
@@ -236,6 +256,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         for banana in bananas {
             banana.position = CGPoint(x: banana.position.x - 2, y: banana.position.y)
+        }
+        for diamond in diamonds {
+            diamond.position = CGPoint(x: diamond.position.x - 2, y: diamond.position.y)
         }
         
         /*

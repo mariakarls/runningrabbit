@@ -29,6 +29,7 @@ class Game {
     var bananas : [Banana]
     var statues : [Statue]
     var rubbles : [Rubble]
+    var diamonds : [Diamond]
     
     
     init(screneHeight: Double, screneWidth: Double, ground: Double) {
@@ -43,22 +44,39 @@ class Game {
         self.bananas = [Banana]()
         self.statues = [Statue]()
         self.rubbles = [Rubble]()
+        self.diamonds = [Diamond]()
 
         self.setupStatues(statHeight: (self.monkey?.height)!)
         self.setupBananas(bananaHeight: screneHeight / 15)
         self.setupRubbles(rubbleHeight: (self.monkey?.height)!/3)
+        self.setupDiamonds(diamondHeight: (self.monkey?.height)!/3) //skal muligvis rettes
+    }
+    
+    private func setupDiamonds (diamondHeight: Double) {
+        
+        let diamondGroundY = groundY + diamondHeight/2
+        diamonds.append(Diamond(height: diamondHeight,
+                              x: (monkey?.startPosX)! + width * 2.2,
+                              y: diamondGroundY + statueHeight!))
+    }
+    
+    var diamondHeight : Double? {
+        if diamonds.count == 0 { return nil }
+        return diamonds[0].height
     }
     
     private func setupRubbles (rubbleHeight: Double) {
         
         let rubbleGroundY = groundY + rubbleHeight/2
         rubbles.append(Rubble(height: rubbleHeight,
-                              x: (monkey?.startPosX)! + width * 0.6,
+                              x: (monkey?.startPosX)! + width * 0.5,
                               y: rubbleGroundY))
-        
-        /*
-         rubblePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2, y: groundPositionY + rubbleHeight))
-         */
+        rubbles.append(Rubble(height: rubbleHeight,
+                              x: (monkey?.startPosX)! + width * 1.2,
+                              y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight,
+                              x: (monkey?.startPosX)! + width * 1.35,
+                              y: rubbleGroundY))
         
     }
     
@@ -72,18 +90,27 @@ class Game {
                               x: (monkey?.startPosX)! + 100,
                               y: groundY + (monkey?.height)!))
         bananas.append(Banana(height: bananaHeight,
-                             x: (monkey?.startPosX)! + width * 0.48,
-                             y: groundY + statueHeight! * 3))
+                             x: (monkey?.startPosX)! + width * 0.3,
+                             y: groundY + statueHeight! * 2))
+        bananas.append(Banana(height: bananaHeight,
+                              x: (monkey?.startPosX)! + width * 0.75,
+                              y: groundY + statueHeight! * 2))
         bananas.append(Banana(height: bananaHeight,
                               x: (monkey?.startPosX)! + width * 0.9,
                               y: groundY + statueHeight! * 3))
         bananas.append(Banana(height: bananaHeight,
                               x: (monkey?.startPosX)! + width * 1,
-                              y: groundY + statueHeight!))
-        /*
+                              y: groundY + statueHeight! * 3))
         bananas.append(Banana(height: bananaHeight,
-                              x: (monkey?.startPosX)! + width * 2.6,
-                              y: groundY + statueHeight! * 5))*/
+                              x: (monkey?.startPosX)! + width * 1,
+                              y: groundY + statueHeight! * 3.5))
+        bananas.append(Banana(height: bananaHeight,
+                              x: (monkey?.startPosX)! + width * 1.7,
+                              y: groundY + statueHeight! * 3))
+        bananas.append(Banana(height: bananaHeight,
+                              x: (monkey?.startPosX)! + width * 1.78,
+                              y: groundY + statueHeight! * 3))
+
     }
     
     var bananaHeight : Double? {
@@ -95,19 +122,28 @@ class Game {
         
         let statueGroundY = groundY + statHeight/2
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.2 + 1,
+                              x: (monkey?.startPosX)! + width * 0.2,
                               y: statueGroundY))
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.3 + 1,
+                              x: (monkey?.startPosX)! + width * 0.3,
                               y: statueGroundY + statHeight * 0.5))
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.45 + 1,
-                              y: statueGroundY + statHeight * 1.3))
-        statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.75 + 1,
+                              x: (monkey?.startPosX)! + width * 0.75,
                               y: statueGroundY))
         statues.append(Statue(height: statHeight,
-                              x: (monkey?.startPosX)! + width * 0.9 + 1,
+                              x: (monkey?.startPosX)! + width * 0.9,
+                              y: statueGroundY + statHeight * 1))
+        statues.append(Statue(height: statHeight,
+                              x: (monkey?.startPosX)! + width * 1,
+                              y: statueGroundY + statHeight * 1))
+        statues.append(Statue(height: statHeight,
+                              x: (monkey?.startPosX)! + width * 1.28,
+                              y: statueGroundY))
+        statues.append(Statue(height: statHeight,
+                              x: (monkey?.startPosX)! + width * 1.7,
+                              y: statueGroundY + statHeight * 1))
+        statues.append(Statue(height: statHeight,
+                              x: (monkey?.startPosX)! + width * 1.78,
                               y: statueGroundY + statHeight * 1))
     }
     
