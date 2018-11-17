@@ -19,6 +19,7 @@ class Game {
         static let ground    : UInt32 = 4
         static let rubble    : UInt32 = 5
         static let banana    : UInt32 = 6
+        static let fire      : UInt32 = 7
     }
     
     var height : Double
@@ -30,6 +31,7 @@ class Game {
     var statues : [Statue]
     var rubbles : [Rubble]
     var diamonds : [Diamond]
+    var morefire : [Fire]
     
     
     init(screneHeight: Double, screneWidth: Double, ground: Double) {
@@ -45,11 +47,32 @@ class Game {
         self.statues = [Statue]()
         self.rubbles = [Rubble]()
         self.diamonds = [Diamond]()
+        self.morefire = [Fire]()
 
         self.setupStatues(statHeight: (self.monkey?.height)!)
         self.setupBananas(bananaHeight: screneHeight / 15)
         self.setupRubbles(rubbleHeight: (self.monkey?.height)!/3)
-        self.setupDiamonds(diamondHeight: (self.monkey?.height)!/3) //skal muligvis rettes
+        self.setupDiamonds(diamondHeight: (self.monkey?.height)!/3) //maybe change
+        self.setupFire(fireHeight: (self.monkey?.height)!/3) //maybe change
+    }
+
+    private func setupFire (fireHeight: Double) {
+        
+        let fireGroundY = groundY + fireHeight/2
+        morefire.append(Fire(height: fireHeight,
+                                x: (monkey?.startPosX)! + width * 0.5,
+                                y: fireGroundY + statueHeight!))
+        morefire.append(Fire(height: fireHeight,
+                             x: (monkey?.startPosX)! + width * 1.2,
+                             y: fireGroundY + statueHeight!))
+        morefire.append(Fire(height: fireHeight,
+                             x: (monkey?.startPosX)! + width * 1.35,
+                             y: fireGroundY + statueHeight!))
+    }
+    
+    var fireHeight : Double? {
+        if morefire.count == 0 { return nil }
+        return morefire[0].height
     }
     
     private func setupDiamonds (diamondHeight: Double) {

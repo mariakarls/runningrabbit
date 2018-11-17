@@ -25,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var statues = [SKSpriteNode]()
     private var rubbles = [SKSpriteNode]()
     private var diamonds = [SKSpriteNode]()
+    private var morefire = [SKSpriteNode]()
     private var score = 0 {
         didSet {
             scoreLabel.text = "\(score)"
@@ -72,6 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buildRubbleSprite()
         buildBananaSprite()
         buildDiamondSprite()
+        buildFireSprite()
         addChild(scoreLabel)
         addChild(pauseButton)
         
@@ -220,7 +222,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             diamondSprite.physicsBody = SKPhysicsBody(rectangleOf: diamondSprite.size)
             diamondSprite.physicsBody?.isDynamic = false
-            diamondSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana
+            diamondSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana //change to diamond
             diamondSprite.physicsBody?.affectedByGravity = false
             diamondSprite.physicsBody?.restitution = 0
             diamondSprite.physicsBody?.contactTestBitMask = Game.PhysicsCategory.monkey
@@ -230,6 +232,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func buildFireSprite() {
+        for fire in (game?.morefire)! {
+            let fireSprite = SKSpriteNode(imageNamed: "fireball_1")
+            let fireWidth = fire.CGFloatWidth(oldHeight: fireSprite.size.height, oldWidth: fireSprite.size.width)
+            fireSprite.size = CGSize(width: fireWidth!, height: fire.CGFloatHeight!)
+            fireSprite.position = CGPoint(x: fire.startPosX!, y: fire.startPosY!)
+            
+            fireSprite.physicsBody = SKPhysicsBody(rectangleOf: fireSprite.size)
+            fireSprite.physicsBody?.isDynamic = false
+            fireSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana //change to fire
+            fireSprite.physicsBody?.affectedByGravity = false
+            fireSprite.physicsBody?.restitution = 0
+            fireSprite.physicsBody?.contactTestBitMask = Game.PhysicsCategory.monkey
+            
+            morefire.append(fireSprite)
+            addChild(fireSprite)
+        }
+    }
     // MARK: build background
     func buildBackground() {
         background.anchorPoint = CGPoint.zero
@@ -284,6 +304,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         for diamond in diamonds {
             diamond.position = CGPoint(x: diamond.position.x - 2, y: diamond.position.y)
+        }
+        for fire in morefire {
+            fire.position = CGPoint(x: fire.position.x - 2, y: fire.position.y)
         }
         
         /*
