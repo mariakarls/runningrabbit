@@ -10,6 +10,7 @@ import Foundation
 import SpriteKit
 import UIKit
 
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Move sprite: http://mammothinteractive.com/touches-and-moving-sprites-in-xcode-spritekit-swift-crash-course-free-tutorial/
@@ -31,10 +32,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             scoreLabel.text = "\(score)"
         }
     }
+    let userDefaults = UserDefaults.standard
+    
     let scoreLabel = SKLabelNode()
     let pauseButton = SKSpriteNode(imageNamed: "pause")
     var isPause = false
+    var isGameOver = false {
+        didSet {
+            if isGameOver {
+                let rawData = userDefaults.object(forKey: DefaultKeys.highScoreList.rawValue)
+                var highScoreList = Array<HighScore>()
+                if (rawData == nil) {
+                    // First time user runs the app, we need to store datastructure to be able to keep high scores
+                    highScoreList = setupHighScoreList()
+                    let encodedData = NSKeyedArchiver.archivedData(withRootObject: highScoreList)
+                    userDefaults.set(encodedData, forKey: DefaultKeys.highScoreList.rawValue)
+                } else {
+                    highScoreList = NSKeyedUnarchiver.unarchiveObject(with: rawData as! Data) as! Array<HighScore>
+                }
+                
+                var sortedHighScoreList = highScoreList.sorted(by: { $0.score > $1.score })
+                if (score > sortedHighScoreList[9].score) {
+                    // You only get a new high score if you beat the pervious ones
+                    // if you get equal score as the 10th seat then you get nothing
+                    userDefaults.set(score, forKey: DefaultKeys.currentPlayerScore.rawValue)
+                    self.gameViewController?.performSegue(withIdentifier: "showGameOverController", sender: self)
+                }
+                else {
+                    self.gameViewController?.performSegue(withIdentifier: "showHighScoreController", sender: self)
+                }
+            }
+        }
+    }
+    weak var gameViewController : GameViewController? = nil
 
+    private func setupHighScoreList() -> Array<HighScore> {
+        var returnList = Array<HighScore>()
+        for _ in 0..<10 {
+            returnList.append(HighScore(score: 0, name: ""))
+        }
+        return returnList
+    }
+    
     override func sceneDidLoad() {
         // Setting up the data for the game
         dataSetup()
@@ -284,7 +323,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(_ Time: CFTimeInterval) {
         
-        if isPause {
+        if isPause || isGameOver {
             return
         }
         
@@ -309,6 +348,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             fire.position = CGPoint(x: fire.position.x - 2, y: fire.position.y)
         }
         
+        if (monkey?.position.x)! < CGFloat(0) {
+            isGameOver = true
+        }
         /*
          
          // to repeat the background

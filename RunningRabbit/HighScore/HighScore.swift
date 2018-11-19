@@ -8,7 +8,8 @@
 
 import Foundation
 
-class HighScore {
+class HighScore: NSObject, NSCoding {
+
     var score: Int
     var name: String
     
@@ -17,4 +18,13 @@ class HighScore {
         self.name = name
     }
     
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(score, forKey: "score")
+        aCoder.encode(name, forKey: "name")
+    }
+    convenience required init?(coder aDecoder: NSCoder) {
+        let score = aDecoder.decodeInteger(forKey: "score")
+        guard let name = aDecoder.decodeObject(forKey: "name") as? String else { return nil }
+        self.init(score:score,name:name)
+    }
 }

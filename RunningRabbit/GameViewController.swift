@@ -28,8 +28,8 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         //skView.showsPhysics = true
         scene.scaleMode = .resizeFill
+        scene.gameViewController = self
         skView.presentScene(scene)
-        
     }
     
     

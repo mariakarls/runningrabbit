@@ -12,26 +12,15 @@ import UIKit
 class HighScoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     // Temporary, will later fetch from database
-    var highScores = [
-        HighScore(score: 100, name: "Player 1"),
-        HighScore(score: 95, name: "Player 2"),
-        HighScore(score: 87, name: "Player 3"),
-        HighScore(score: 67, name: "Player 4"),
-        HighScore(score: 44, name: "Player 5"),
-        HighScore(score: 34, name: "Player 6"),
-        HighScore(score: 33, name: "Player 7"),
-        HighScore(score: 30, name: "Player 8"),
-        HighScore(score: 29, name: "Player 9"),
-        HighScore(score: 10, name: "Player 10"),
-        HighScore(score: 9, name: "Player 11"),
-        HighScore(score: 8, name: "Player 12"),
-        HighScore(score: 7, name: "Player 13")]
+    var highScores = Array<HighScore>()
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // https://pusher.com/tutorials/realtime-table-swift/
-        
+        let decoded = userDefaults.object(forKey: DefaultKeys.highScoreList.rawValue) as! Data
+        let unsortedhighScores = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Array<HighScore>
+        highScores = unsortedhighScores.sorted(by: { $0.score > $1.score })
     }
     
     @IBOutlet weak var highScoreTableView: UITableView! {
