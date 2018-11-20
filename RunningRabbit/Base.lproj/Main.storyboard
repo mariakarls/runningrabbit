@@ -38,49 +38,62 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="U9X-dm-KcC"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Monkey Jump is created by Lea Fog-Fredsgaard and María Karlsdóttir " lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiB-Ca-7dq">
-                                <rect key="frame" x="20" y="164" width="335" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFl-fg-LO4">
-                                <rect key="frame" x="20" y="276" width="335" height="48"/>
-                                <string key="text">Icons made by Material Design (Google) from www.flaticon.com
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rp-z8-Sgn">
+                                <rect key="frame" x="0.0" y="154" width="375" height="658"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Monkey Jump is created by Lea Fog-Fredsgaard and María Karlsdóttir " lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiB-Ca-7dq">
+                                        <rect key="frame" x="20" y="20" width="335" height="48"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSa-on-Hwf">
+                                        <rect key="frame" x="20" y="88" width="335" height="24"/>
+                                        <string key="text">Art is from GameArtGuppy.com 
 </string>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kSa-on-Hwf">
-                                <rect key="frame" x="20" y="232" width="335" height="24"/>
-                                <string key="text">Art is from GameArtGuppy.com 
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFl-fg-LO4">
+                                        <rect key="frame" x="20" y="132" width="335" height="48"/>
+                                        <string key="text">Icons made by Material Design (Google) from www.flaticon.com
 </string>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="BiB-Ca-7dq" secondAttribute="bottom" constant="600" id="31T-Sq-FCf"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="trailing" secondItem="kSa-on-Hwf" secondAttribute="trailing" id="51V-Cw-2FI"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="leading" secondItem="7rp-z8-Sgn" secondAttribute="leading" constant="20" id="8ON-kr-G6g"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="trailing" secondItem="IFl-fg-LO4" secondAttribute="trailing" id="FGQ-jo-uYR"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="top" secondItem="7rp-z8-Sgn" secondAttribute="top" constant="20" id="Par-ED-mUq"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="leading" secondItem="kSa-on-Hwf" secondAttribute="leading" id="UO1-kq-nTD"/>
+                                    <constraint firstItem="IFl-fg-LO4" firstAttribute="top" secondItem="kSa-on-Hwf" secondAttribute="bottom" constant="20" id="dIj-0l-AKK"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="leading" secondItem="IFl-fg-LO4" secondAttribute="leading" id="iwe-rY-eF4"/>
+                                    <constraint firstItem="BiB-Ca-7dq" firstAttribute="centerX" secondItem="7rp-z8-Sgn" secondAttribute="centerX" id="jwJ-52-HEP"/>
+                                    <constraint firstItem="kSa-on-Hwf" firstAttribute="top" secondItem="BiB-Ca-7dq" secondAttribute="bottom" constant="20" id="lgk-Vs-khN"/>
+                                    <constraint firstAttribute="trailing" secondItem="BiB-Ca-7dq" secondAttribute="trailing" constant="20" id="oRa-RB-J2K"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="BiB-Ca-7dq" firstAttribute="leading" secondItem="0nn-HG-RqH" secondAttribute="leading" constant="20" id="5Fs-2V-lb2"/>
+                            <constraint firstAttribute="bottom" secondItem="7rp-z8-Sgn" secondAttribute="bottom" id="1ss-Ye-kl6"/>
                             <constraint firstItem="zjS-ay-usB" firstAttribute="leading" secondItem="0nn-HG-RqH" secondAttribute="leading" constant="20" id="6vo-Rp-OV0"/>
-                            <constraint firstItem="0nn-HG-RqH" firstAttribute="trailing" secondItem="IFl-fg-LO4" secondAttribute="trailing" constant="20" id="7cA-bj-lWx"/>
-                            <constraint firstItem="0nn-HG-RqH" firstAttribute="trailing" secondItem="kSa-on-Hwf" secondAttribute="trailing" constant="20" id="8Ak-1y-jGJ"/>
                             <constraint firstItem="LgT-nF-T2F" firstAttribute="top" secondItem="5gd-5E-S5N" secondAttribute="top" id="EzW-CG-gAz"/>
                             <constraint firstItem="LgT-nF-T2F" firstAttribute="trailing" secondItem="5gd-5E-S5N" secondAttribute="trailing" id="ISN-Af-k66"/>
                             <constraint firstItem="LgT-nF-T2F" firstAttribute="leading" secondItem="5gd-5E-S5N" secondAttribute="leading" id="NGW-DF-33W"/>
                             <constraint firstAttribute="bottom" secondItem="LgT-nF-T2F" secondAttribute="bottom" id="a1p-zx-KDS"/>
                             <constraint firstItem="zjS-ay-usB" firstAttribute="top" secondItem="0nn-HG-RqH" secondAttribute="top" id="b4C-J2-H5P"/>
-                            <constraint firstItem="kSa-on-Hwf" firstAttribute="leading" secondItem="0nn-HG-RqH" secondAttribute="leading" constant="20" id="b91-h6-Loa"/>
                             <constraint firstItem="qDA-yH-Hvm" firstAttribute="centerX" secondItem="5gd-5E-S5N" secondAttribute="centerX" id="fCR-UM-CBu"/>
-                            <constraint firstItem="BiB-Ca-7dq" firstAttribute="top" secondItem="qDA-yH-Hvm" secondAttribute="bottom" constant="30" id="gwl-YU-9yi"/>
                             <constraint firstItem="qDA-yH-Hvm" firstAttribute="top" secondItem="0nn-HG-RqH" secondAttribute="top" constant="30" id="j6S-SG-OTI"/>
-                            <constraint firstItem="IFl-fg-LO4" firstAttribute="top" secondItem="kSa-on-Hwf" secondAttribute="bottom" constant="20" id="kJd-Se-EvJ"/>
-                            <constraint firstItem="kSa-on-Hwf" firstAttribute="top" secondItem="BiB-Ca-7dq" secondAttribute="bottom" constant="20" id="mNP-ZD-dgB"/>
-                            <constraint firstItem="IFl-fg-LO4" firstAttribute="leading" secondItem="0nn-HG-RqH" secondAttribute="leading" constant="20" id="raL-Me-wUP"/>
+                            <constraint firstItem="7rp-z8-Sgn" firstAttribute="top" secondItem="qDA-yH-Hvm" secondAttribute="bottom" constant="20" id="oxC-zG-ZuY"/>
                             <constraint firstItem="qDA-yH-Hvm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zjS-ay-usB" secondAttribute="trailing" constant="8" symbolic="YES" id="saB-EI-9vA"/>
-                            <constraint firstItem="0nn-HG-RqH" firstAttribute="trailing" secondItem="BiB-Ca-7dq" secondAttribute="trailing" constant="20" id="t2W-wo-KfS"/>
+                            <constraint firstItem="7rp-z8-Sgn" firstAttribute="leading" secondItem="0nn-HG-RqH" secondAttribute="leading" id="saI-Dp-ZSe"/>
+                            <constraint firstItem="7rp-z8-Sgn" firstAttribute="trailing" secondItem="0nn-HG-RqH" secondAttribute="trailing" id="si8-ve-Dwb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0nn-HG-RqH"/>
                     </view>
@@ -106,61 +119,69 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zq6-NJ-4FC">
-                                <rect key="frame" x="113.66666666666669" y="326.66666666666669" width="148" height="169"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WqT-1m-l0I">
+                                <rect key="frame" x="0.0" y="142" width="375" height="670"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erC-HS-9pe">
-                                        <rect key="frame" x="0.3333333333333286" y="0.0" width="147" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                        <state key="normal" title="New game">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="JY7-Ii-Sh0" kind="show" id="5LR-8q-aMF"/>
-                                        </connections>
-                                    </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ujM-bd-Kxa">
-                                        <rect key="frame" x="-31" y="55" width="210" height="0.0"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                        <state key="normal" title="Continue game">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="JY7-Ii-Sh0" kind="show" id="O0b-S7-tn7"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgQ-ET-ofJ">
-                                        <rect key="frame" x="0.0" y="59" width="148" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                        <state key="normal" title="High score">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="bqv-La-gmz" kind="show" id="aiR-8I-NlO"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-DW-A0L">
-                                        <rect key="frame" x="31.999999999999986" y="118" width="84" height="51"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                        <state key="normal" title="About">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="fLD-D8-ug7" kind="show" id="tDA-If-HbA"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zq6-NJ-4FC">
+                                        <rect key="frame" x="113" y="251" width="148" height="169"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erC-HS-9pe">
+                                                <rect key="frame" x="0.6666666666666714" y="0.0" width="147" height="51"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="New game">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="JY7-Ii-Sh0" kind="show" id="5LR-8q-aMF"/>
+                                                </connections>
+                                            </button>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ujM-bd-Kxa">
+                                                <rect key="frame" x="-31" y="55" width="210" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="Continue game">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="JY7-Ii-Sh0" kind="show" id="O0b-S7-tn7"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgQ-ET-ofJ">
+                                                <rect key="frame" x="0.0" y="59" width="148" height="51"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="High score">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="bqv-La-gmz" kind="show" id="aiR-8I-NlO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-DW-A0L">
+                                                <rect key="frame" x="32" y="118" width="84" height="51"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <state key="normal" title="About">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="fLD-D8-ug7" kind="show" id="tDA-If-HbA"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                            </stackView>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="zq6-NJ-4FC" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="4M4-iY-qwX"/>
                             <constraint firstItem="yr2-ba-2fV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="5Fk-HQ-bby"/>
                             <constraint firstItem="Frm-v1-oRB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Gor-gE-zFh"/>
+                            <constraint firstItem="WqT-1m-l0I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RdZ-aU-foP"/>
+                            <constraint firstItem="WqT-1m-l0I" firstAttribute="top" secondItem="yr2-ba-2fV" secondAttribute="bottom" constant="20" id="WDZ-A7-0aw"/>
                             <constraint firstItem="Frm-v1-oRB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YMj-b8-W7J"/>
+                            <constraint firstAttribute="bottom" secondItem="WqT-1m-l0I" secondAttribute="bottom" id="ZNg-eD-agU"/>
                             <constraint firstAttribute="trailing" secondItem="Frm-v1-oRB" secondAttribute="trailing" id="aGU-R0-vih"/>
                             <constraint firstAttribute="bottom" secondItem="Frm-v1-oRB" secondAttribute="bottom" id="cqh-xP-b9R"/>
-                            <constraint firstItem="zq6-NJ-4FC" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fIj-3y-pL2"/>
+                            <constraint firstItem="WqT-1m-l0I" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hIP-qa-n3L"/>
                             <constraint firstItem="yr2-ba-2fV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iwl-cl-eeN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -169,7 +190,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="466" y="285"/>
+            <point key="canvasLocation" x="464.80000000000001" y="284.48275862068965"/>
         </scene>
         <!--Game Over View Controller-->
         <scene sceneID="rvx-Ft-ylN">
@@ -423,7 +444,7 @@
         <image name="background" width="1136" height="2048"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="H5a-dS-gSX"/>
+        <segue reference="aiR-8I-NlO"/>
         <segue reference="O0b-S7-tn7"/>
         <segue reference="U9X-dm-KcC"/>
     </inferredMetricsTieBreakers>
