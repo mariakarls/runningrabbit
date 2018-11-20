@@ -36,6 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let scoreLabel = SKLabelNode()
     let pauseButton = SKSpriteNode(imageNamed: "pause")
+    let playButton = SKSpriteNode(imageNamed: "play")
     var isPause = false
     var isGameOver = false {
         didSet {
@@ -99,7 +100,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pauseButton.name = "pause"
         pauseButton.size = scoreLabel.frame.size
         pauseButton.position = CGPoint(x: frameWidth/20, y: frameHeight - frameHeight/10 + pauseButton.size.height/2)
-        pauseButton.isUserInteractionEnabled = true
+        pauseButton.isUserInteractionEnabled = false
+        playButton.name = "play"
+        playButton.size = scoreLabel.frame.size
+        playButton.position = CGPoint(x: frameWidth/20, y: frameHeight - frameHeight/10 + pauseButton.size.height/2)
+        playButton.isUserInteractionEnabled = false
+        playButton.isHidden = true
     }
     
     override func didMove(to view: SKView) {
@@ -115,27 +121,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         buildFireSprite()
         addChild(scoreLabel)
         addChild(pauseButton)
+        addChild(playButton)
         
         physicsWorld.contactDelegate = self
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
+        
+        for touch in touches
+        {
             let location = touch.location(in: self)
-            let node = self.atPoint(location)
-            if (node.name == "pause") {
-                isPause = true
-                return
+            
+            if pauseButton.contains(location) {
+                isPause = !isPause
+                pauseButton.isHidden = !pauseButton.isHidden
+                playButton.isHidden = !playButton.isHidden
+                monkey?.isPaused = !(monkey?.isPaused)!
+            } else {
+                if !isPause {
+                    monkeyJump()
+                }
             }
         }
-        monkeyJump()
     }
     
     func monkeyJump() {
         monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/500, dy: (game?.statueHeight)!/2.0))
         // these values seem to work well on iPhone X but not on iPad
     }
-    
     
     // MARK: collision detection
     func didBegin(_ contact: SKPhysicsContact) {
