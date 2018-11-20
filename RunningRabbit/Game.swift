@@ -33,11 +33,14 @@ class Game {
     var diamonds : [Diamond]
     var morefire : [Fire]
     
+    var highScoreCount : Int
+    
     
     init(screneHeight: Double, screneWidth: Double, ground: Double) {
         self.height = screneHeight
         self.width = screneWidth
         self.groundY = ground
+        self.highScoreCount = 10
         
         self.monkey = Monkey(height: Double(screneHeight/5),
                              x: screneWidth / 8,

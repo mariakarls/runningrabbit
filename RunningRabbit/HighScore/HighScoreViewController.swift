@@ -18,9 +18,7 @@ class HighScoreViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let decoded = userDefaults.object(forKey: DefaultKeys.highScoreList.rawValue) as! Data
-        let unsortedhighScores = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! Array<HighScore>
-        highScores = unsortedhighScores.sorted(by: { $0.score > $1.score })
+        highScores = HighScore.getData(from: userDefaults)!
     }
     
     @IBOutlet weak var highScoreTableView: UITableView! {
@@ -29,8 +27,6 @@ class HighScoreViewController: UIViewController, UITableViewDataSource, UITableV
             highScoreTableView.delegate = self
         }
     }
-    
-
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -50,5 +46,4 @@ class HighScoreViewController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
  
-
 }

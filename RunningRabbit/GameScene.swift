@@ -20,6 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     private var game : Game?
     var background = SKSpriteNode(imageNamed: "background_landscape")
+    var secondBackground = SKSpriteNode(imageNamed: "background_landscape")
     private var monkey : SKSpriteNode?
     private var monkeyWalkingFrames: [SKTexture] = []
     private var bananas = [SKSpriteNode]()
@@ -41,19 +42,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameOver = false {
         didSet {
             if isGameOver {
-                let rawData = userDefaults.object(forKey: DefaultKeys.highScoreList.rawValue)
-                var highScoreList = Array<HighScore>()
-                if (rawData == nil) {
+                var highScoreList = HighScore.getData(from: userDefaults)
+                if (highScoreList == nil) {
                     // First time user runs the app, we need to store datastructure to be able to keep high scores
                     highScoreList = setupHighScoreList()
-                    let encodedData = NSKeyedArchiver.archivedData(withRootObject: highScoreList)
-                    userDefaults.set(encodedData, forKey: DefaultKeys.highScoreList.rawValue)
-                } else {
-                    highScoreList = NSKeyedUnarchiver.unarchiveObject(with: rawData as! Data) as! Array<HighScore>
+                    HighScore.setData(from: userDefaults, with: highScoreList!)
                 }
-                
-                var sortedHighScoreList = highScoreList.sorted(by: { $0.score > $1.score })
-                if (score > sortedHighScoreList[9].score) {
+                if (score > highScoreList![(game?.highScoreCount)!-1].score) {
                     // You only get a new high score if you beat the pervious ones
                     // if you get equal score as the 10th seat then you get nothing
                     userDefaults.set(score, forKey: DefaultKeys.currentPlayerScore.rawValue)
@@ -69,7 +64,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     private func setupHighScoreList() -> Array<HighScore> {
         var returnList = Array<HighScore>()
-        for _ in 0..<10 {
+        for _ in 0...(game?.highScoreCount)!-1 {
             returnList.append(HighScore(score: 0, name: ""))
         }
         return returnList
@@ -366,14 +361,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if (monkey?.position.x)! < CGFloat(0) {
             isGameOver = true
         }
+        
         /*
-         
-         // to repeat the background
-         if(background.position.x < -background.size.width + frame.size.width)
-         {
-         background.position = CGPoint(x: background.position.x, y: background.position.y)
-         }
-         */
+         if background.position.x < -background.size.width+frame.size.width {
+            secondBackground.anchorPoint = CGPoint.zero
+            secondBackground.position = CGPoint(x: frame.size.width, y: 0)
+            secondBackground.size.height = (game?.CGFloatHeight)!
+            secondBackground.zPosition = -15
+            self.addChild(secondBackground)
+        }
+        if background.position.x < -background.size.width {
+            self.removeChildren(in: [background])
+        }
+        if secondBackground.position.x < -secondBackground.size.width+frame.size.width {
+            background.anchorPoint = CGPoint.zero
+            background.position = CGPoint(x: frame.size.width, y: 0)
+            background.size.height = (game?.CGFloatHeight)!
+            background.zPosition = -15
+            self.addChild(background)
+        }
+        if background.position.x < -background.size.width {
+            self.removeChildren(in: [secondBackground])
+        }
+ */
+ 
     }
     
 }

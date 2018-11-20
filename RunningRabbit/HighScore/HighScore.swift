@@ -27,4 +27,17 @@ class HighScore: NSObject, NSCoding {
         guard let name = aDecoder.decodeObject(forKey: "name") as? String else { return nil }
         self.init(score:score,name:name)
     }
+    
+    static func getData(from userDefaults: UserDefaults) -> Array<HighScore>? {
+        let rawData = userDefaults.object(forKey: DefaultKeys.highScoreList.rawValue)
+        if rawData == nil { return nil }
+        let data = NSKeyedUnarchiver.unarchiveObject(with: rawData as! Data) as? Array<HighScore>
+        return data!.sorted(by: { $0.score > $1.score })
+    }
+    
+    static func setData(from userDefaults: UserDefaults, with highScores: Array<HighScore>) {
+        let encodedData = NSKeyedArchiver.archivedData(withRootObject: highScores)
+        userDefaults.set(encodedData, forKey: DefaultKeys.highScoreList.rawValue)
+    }
+    
 }
