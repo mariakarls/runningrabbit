@@ -159,6 +159,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let banana = contact.bodyB.node as? SKSpriteNode {
                 collectBanana(banana: banana)
             }
+        } else if (bodyA == Game.PhysicsCategory.monkey && bodyB == Game.PhysicsCategory.fire) {
+            isGameOver = true
         }
     }
     
@@ -293,7 +295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             fireSprite.physicsBody = SKPhysicsBody(rectangleOf: fireSprite.size)
             fireSprite.physicsBody?.isDynamic = false
-            fireSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana //change to fire
+            fireSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.fire
             fireSprite.physicsBody?.affectedByGravity = false
             fireSprite.physicsBody?.restitution = 0
             fireSprite.physicsBody?.contactTestBitMask = Game.PhysicsCategory.monkey
