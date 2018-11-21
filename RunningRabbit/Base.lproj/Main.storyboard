@@ -119,69 +119,61 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WqT-1m-l0I">
-                                <rect key="frame" x="0.0" y="142" width="375" height="670"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zq6-NJ-4FC">
+                                <rect key="frame" x="113.66666666666669" y="321.66666666666669" width="148" height="169"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zq6-NJ-4FC">
-                                        <rect key="frame" x="113" y="251" width="148" height="169"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erC-HS-9pe">
-                                                <rect key="frame" x="0.6666666666666714" y="0.0" width="147" height="51"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                <state key="normal" title="New game">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="JY7-Ii-Sh0" kind="show" id="5LR-8q-aMF"/>
-                                                </connections>
-                                            </button>
-                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ujM-bd-Kxa">
-                                                <rect key="frame" x="-31" y="55" width="210" height="0.0"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                <state key="normal" title="Continue game">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="JY7-Ii-Sh0" kind="show" id="O0b-S7-tn7"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgQ-ET-ofJ">
-                                                <rect key="frame" x="0.0" y="59" width="148" height="51"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                <state key="normal" title="High score">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="bqv-La-gmz" kind="show" id="aiR-8I-NlO"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-DW-A0L">
-                                                <rect key="frame" x="32" y="118" width="84" height="51"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                                <state key="normal" title="About">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="fLD-D8-ug7" kind="show" id="tDA-If-HbA"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erC-HS-9pe">
+                                        <rect key="frame" x="0.3333333333333286" y="0.0" width="147" height="51"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <state key="normal" title="New game">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="JY7-Ii-Sh0" kind="show" id="5LR-8q-aMF"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ujM-bd-Kxa">
+                                        <rect key="frame" x="-31" y="55" width="210" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <state key="normal" title="Continue game">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="JY7-Ii-Sh0" kind="show" id="O0b-S7-tn7"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgQ-ET-ofJ">
+                                        <rect key="frame" x="0.0" y="59" width="148" height="51"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <state key="normal" title="High score">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="bqv-La-gmz" kind="show" id="aiR-8I-NlO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v8G-DW-A0L">
+                                        <rect key="frame" x="31.999999999999986" y="118" width="84" height="51"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                        <state key="normal" title="About">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="fLD-D8-ug7" kind="show" id="tDA-If-HbA"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                            </scrollView>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="yr2-ba-2fV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="5Fk-HQ-bby"/>
+                            <constraint firstItem="zq6-NJ-4FC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AfI-Zh-NTw"/>
                             <constraint firstItem="Frm-v1-oRB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Gor-gE-zFh"/>
-                            <constraint firstItem="WqT-1m-l0I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RdZ-aU-foP"/>
-                            <constraint firstItem="WqT-1m-l0I" firstAttribute="top" secondItem="yr2-ba-2fV" secondAttribute="bottom" constant="20" id="WDZ-A7-0aw"/>
+                            <constraint firstItem="zq6-NJ-4FC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="IrU-3g-7L7"/>
                             <constraint firstItem="Frm-v1-oRB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="YMj-b8-W7J"/>
-                            <constraint firstAttribute="bottom" secondItem="WqT-1m-l0I" secondAttribute="bottom" id="ZNg-eD-agU"/>
                             <constraint firstAttribute="trailing" secondItem="Frm-v1-oRB" secondAttribute="trailing" id="aGU-R0-vih"/>
                             <constraint firstAttribute="bottom" secondItem="Frm-v1-oRB" secondAttribute="bottom" id="cqh-xP-b9R"/>
-                            <constraint firstItem="WqT-1m-l0I" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hIP-qa-n3L"/>
                             <constraint firstItem="yr2-ba-2fV" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="iwl-cl-eeN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -223,7 +215,7 @@
                                 <rect key="frame" x="20" y="154" width="335" height="604"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PEw-qF-mGw">
-                                        <rect key="frame" x="78.333333333333329" y="20" width="178.33333333333337" height="68"/>
+                                        <rect key="frame" x="78.333333333333314" y="20" width="178.33333333333337" height="68"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="53" translatesAutoresizingMaskIntoConstraints="NO" id="HEH-V0-dbv">
                                                 <rect key="frame" x="0.0" y="0.0" width="178.33333333333334" height="30"/>

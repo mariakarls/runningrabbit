@@ -19,8 +19,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Labrynth: https://www.thedroidsonroids.com/blog/ios/maze-game-with-spritekit
     
     private var game : Game?
-    var background = SKSpriteNode(imageNamed: "background_landscape")
-    var secondBackground = SKSpriteNode(imageNamed: "background_landscape")
+    var background1 = SKSpriteNode(imageNamed: "background_landscape")
+    var background2 = SKSpriteNode(imageNamed: "background_landscape2")
     private var monkey : SKSpriteNode?
     private var monkeyWalkingFrames: [SKTexture] = []
     private var bananas = [SKSpriteNode]()
@@ -301,11 +301,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     // MARK: build background
     func buildBackground() {
-        background.anchorPoint = CGPoint.zero
-        background.position = CGPoint(x: 0, y: 0)
-        background.size.height = (game?.CGFloatHeight)!
-        background.zPosition = -15
-        self.addChild(background)
+        background1.anchorPoint = CGPoint.zero
+        background1.position = CGPoint(x: 0, y: 0)
+        background1.size.height = (game?.CGFloatHeight)!
+        background1.zPosition = -15
+        self.addChild(background1)
+        
+        background2.anchorPoint = CGPoint.zero
+        background2.position = CGPoint(x: background1.size.width-1, y: 0)
+        background2.size.height = (game?.CGFloatHeight)!
+        background2.zPosition = -15
+        self.addChild(background2)
     }
     func buildGround() {
         let deviceWidth = game?.width
@@ -339,8 +345,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Move the background and obstacles
         
-        background.position = CGPoint(x: background.position.x - 2, y: background.position.y)
-        
+        background1.position = CGPoint(x: background1.position.x - 2, y: background2.position.y)
+        background2.position = CGPoint(x: background1.position.x - 2, y: background2.position.y)
+
         // Probably only want to do this for the visible ones, on screen
         for statue in statues {
             statue.position = CGPoint(x: statue.position.x - 2, y: statue.position.y)
@@ -362,28 +369,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             isGameOver = true
         }
         
-        /*
-         if background.position.x < -background.size.width+frame.size.width {
-            secondBackground.anchorPoint = CGPoint.zero
-            secondBackground.position = CGPoint(x: frame.size.width, y: 0)
-            secondBackground.size.height = (game?.CGFloatHeight)!
-            secondBackground.zPosition = -15
-            self.addChild(secondBackground)
+        // Repeat the background
+        if(background1.position.x - frame.size.width < -background1.size.width) {
+            background1.position = CGPoint(x: background2.position.x + background2.size.width - frame.size.width, y: background1.position.y )
         }
-        if background.position.x < -background.size.width {
-            self.removeChildren(in: [background])
+        if(background2.position.x - frame.size.width < -background2.size.width) {
+            background2.position = CGPoint(x: background1.position.x + background1.size.width - frame.size.width, y: background2.position.y )
         }
-        if secondBackground.position.x < -secondBackground.size.width+frame.size.width {
-            background.anchorPoint = CGPoint.zero
-            background.position = CGPoint(x: frame.size.width, y: 0)
-            background.size.height = (game?.CGFloatHeight)!
-            background.zPosition = -15
-            self.addChild(background)
-        }
-        if background.position.x < -background.size.width {
-            self.removeChildren(in: [secondBackground])
-        }
- */
  
     }
     
