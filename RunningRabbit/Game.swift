@@ -60,8 +60,7 @@ class Game {
         static let block26X : Double = 2180
         static let block27X : Double = 2210
         static let block28X : Double = 2240
-        static let block29X : Double = 2200
-        static let block30X : Double = 3300
+        static let block29X : Double = 2280
     }
     
     var height : Double
@@ -75,14 +74,14 @@ class Game {
     var diamonds : [Diamond]
     var morefire : [Fire]
     
-    var highScoreCount : Int
-    
-    
+    var highScoreCount = 10
+    let levelOffsetX = 2300.0
+    var nextLevelToDraw = 0
+
     init(screneHeight: Double, screneWidth: Double, ground: Double) {
         self.height = screneHeight
         self.width = screneWidth
         self.groundY = ground
-        self.highScoreCount = 10
         
         self.monkey = Monkey(height: Double(screneHeight/5),
                              x: screneWidth / 8,
@@ -94,28 +93,45 @@ class Game {
         self.diamonds = [Diamond]()
         self.morefire = [Fire]()
 
+        // We create the first and second levels right away, then as we go
+        createMoreSprites()
+        createMoreSprites()
+    }
+    
+    public func nextLevel() {
+        for banana in bananas {
+            banana.updateScore()
+        }
+        for diamond in diamonds {
+            diamond.updateScore()
+        }
+    }
+    
+    public func createMoreSprites() {
+        let levelNumber = Double(nextLevelToDraw)
         
-        self.setupStatues(statHeight: (self.monkey?.height)!)
-        self.setupBananas(bananaHeight: screneHeight / 15)
-        self.setupRubbles(rubbleHeight: (self.monkey?.height)!/3)
-        self.setupDiamonds(diamondHeight: (self.monkey?.height)!/3) //maybe change
-        self.setupFire(fireHeight: (self.monkey?.height)!/3) //maybe change
- 
+        self.setupStatues(statHeight: (self.monkey?.height)!, level: levelNumber)
+        self.setupBananas(bananaHeight: self.height / 15, level: levelNumber)
+        self.setupRubbles(rubbleHeight: (self.monkey?.height)!/3, level: levelNumber)
+        self.setupDiamonds(diamondHeight: (self.monkey?.height)!/3, level: levelNumber)
+        self.setupFire(fireHeight: (self.monkey?.height)!/3, level: levelNumber)
+        
+        nextLevelToDraw += 1
     }
 
-    private func setupFire (fireHeight: Double) {
+    private func setupFire (fireHeight: Double, level: Double) {
         let fireGroundY = groundY + Layout.fireOnGroundY
-        morefire.append(Fire(height: fireHeight, x: Layout.block3X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block10X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block12X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block17X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block19X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block20X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block21X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block22X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block23X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block24X, y: fireGroundY))
-        morefire.append(Fire(height: fireHeight, x: Layout.block25X, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block3X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block10X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block12X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block17X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block19X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block20X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block21X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block22X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block23X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block24X + level * levelOffsetX, y: fireGroundY))
+        morefire.append(Fire(height: fireHeight, x: Layout.block25X + level * levelOffsetX, y: fireGroundY))
     }
     
     var fireHeight : Double? {
@@ -123,12 +139,12 @@ class Game {
         return morefire[0].height
     }
     
-    private func setupDiamonds (diamondHeight: Double) {
+    private func setupDiamonds (diamondHeight: Double, level: Double) {
         
         let diamondGroundY = groundY + Layout.diamondOffsetY
-        diamonds.append(Diamond(height: diamondHeight, x: Layout.block11X, y: diamondGroundY, isFinal: false))
-        diamonds.append(Diamond(height: diamondHeight, x: Layout.block16X, y: diamondGroundY, isFinal: false))
-        diamonds.append(Diamond(height: diamondHeight, x: Layout.block29X, y: diamondGroundY, isFinal: true))
+        diamonds.append(Diamond(height: diamondHeight, x: Layout.block11X + level * levelOffsetX, y: diamondGroundY, isFinal: false))
+        diamonds.append(Diamond(height: diamondHeight, x: Layout.block16X + level * levelOffsetX, y: diamondGroundY, isFinal: false))
+        diamonds.append(Diamond(height: diamondHeight, x: Layout.block29X + level * levelOffsetX, y: diamondGroundY, isFinal: true))
     }
     
     var diamondHeight : Double? {
@@ -136,19 +152,19 @@ class Game {
         return diamonds[0].height
     }
     
-    private func setupRubbles (rubbleHeight: Double) {
+    private func setupRubbles (rubbleHeight: Double, level: Double) {
         let rubbleGroundY = groundY + Layout.rubbleOnGroundY
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block3X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block10X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block12X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block17X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block19X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block20X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block21X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block22X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block23X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block24X, y: rubbleGroundY))
-        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block25X, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block3X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block10X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block12X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block17X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block19X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block20X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block21X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block22X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block23X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block24X + level * levelOffsetX, y: rubbleGroundY))
+        rubbles.append(Rubble(height: rubbleHeight, x: Layout.block25X + level * levelOffsetX, y: rubbleGroundY))
     }
     
     var rubbleHeight : Double? {
@@ -156,23 +172,20 @@ class Game {
         return rubbles[0].height
     }
     
-    private func setupBananas (bananaHeight: Double) {
+    private func setupBananas (bananaHeight: Double, level: Double) {
         let ground = groundY + Layout.statueOnGroundY + Layout.bananaOffsetY
         let first = groundY + Layout.statueOnFirstY + Layout.bananaOffsetY
         let second = groundY + Layout.statueOnSecondY + Layout.bananaOffsetY
         
-        bananas.append(Banana(height: bananaHeight, x: Layout.block1X, y: ground))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block2X, y: first))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block7X, y: first))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block8X, y: first))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block14X, y: first))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block16X, y: second))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block20X, y: ground))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block22X, y: ground))
-        bananas.append(Banana(height: bananaHeight, x: Layout.block27X, y: ground))
-
-
-
+        bananas.append(Banana(height: bananaHeight, x: Layout.block1X + level * levelOffsetX, y: ground))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block2X + level * levelOffsetX, y: first))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block7X + level * levelOffsetX, y: first))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block8X + level * levelOffsetX, y: first))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block14X + level * levelOffsetX, y: first))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block16X + level * levelOffsetX, y: second))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block20X + level * levelOffsetX, y: ground))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block22X + level * levelOffsetX, y: ground))
+        bananas.append(Banana(height: bananaHeight, x: Layout.block27X + level * levelOffsetX, y: ground))
     }
     
     var bananaHeight : Double? {
@@ -180,41 +193,24 @@ class Game {
         return bananas[0].height
     }
     
-    private func setupStatues (statHeight: Double) {
-        
+    private func setupStatues (statHeight: Double, level: Double) {
         let statueGroundY = groundY + Layout.statueOnGroundY
         let statueFirstY = groundY + Layout.statueOnFirstY
         let statueSecondY = groundY + Layout.statueOnSecondY
-        statues.append(Statue(height: statHeight, x: Layout.block1X, y: statueGroundY))
-        statues.append(Statue(height: statHeight, x: Layout.block2X, y: statueFirstY))
-        statues.append(Statue(height: statHeight, x: Layout.block5X, y: statueGroundY))
-        statues.append(Statue(height: statHeight, x: Layout.block7X, y: statueFirstY))
-        statues.append(Statue(height: statHeight, x: Layout.block8X, y: statueFirstY))
-        statues.append(Statue(height: statHeight, x: Layout.block11X, y: statueGroundY))
-        statues.append(Statue(height: statHeight, x: Layout.block13X, y: statueGroundY))
-        statues.append(Statue(height: statHeight, x: Layout.block14X, y: statueFirstY))
-        statues.append(Statue(height: statHeight, x: Layout.block15X, y: statueSecondY))
-        
+        statues.append(Statue(height: statHeight, x: Layout.block1X + level * levelOffsetX, y: statueGroundY))
+        statues.append(Statue(height: statHeight, x: Layout.block2X + level * levelOffsetX, y: statueFirstY))
+        statues.append(Statue(height: statHeight, x: Layout.block5X + level * levelOffsetX, y: statueGroundY))
+        statues.append(Statue(height: statHeight, x: Layout.block7X + level * levelOffsetX, y: statueFirstY))
+        statues.append(Statue(height: statHeight, x: Layout.block8X + level * levelOffsetX, y: statueFirstY))
+        statues.append(Statue(height: statHeight, x: Layout.block11X + level * levelOffsetX, y: statueGroundY))
+        statues.append(Statue(height: statHeight, x: Layout.block13X + level * levelOffsetX, y: statueGroundY))
+        statues.append(Statue(height: statHeight, x: Layout.block14X + level * levelOffsetX, y: statueFirstY))
+        statues.append(Statue(height: statHeight, x: Layout.block15X + level * levelOffsetX, y: statueSecondY))
     }
     
     var statueHeight : Double? {
         if statues.count == 0 { return nil }
         return statues[0].height
     }
-    
-    /*
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*0.8, y: groundPositionY + statueHeight))
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.2, y: groundPositionY + statueHeight))
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.3, y: groundPositionY + 1.5*statueHeight))
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.4, y: groundPositionY + 2*statueHeight))
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*1.5, y: groundPositionY + 1.5*statueHeight))
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.5, y: groundPositionY + statueHeight))
- statuePositions.append(CGPoint(x: (monkeyPosition.x) + frameWidth!*2.6, y: groundPositionY + 1.5*statueHeight))
- 
- */
-    
-    
-    
-    
     
 }

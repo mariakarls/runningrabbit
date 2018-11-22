@@ -35,6 +35,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     let userDefaults = UserDefaults.standard
+    var changeInBackground = 1.0
+    var levelNumber = 0
     
     let scoreLabel = SKLabelNode()
     let pauseButton = SKSpriteNode(imageNamed: "pause")
@@ -113,11 +115,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         buildMonkeySprite()
         animateMonkey()
-        buildStatueSprite()
-        buildRubbleSprite()
-        buildBananaSprite()
-        buildDiamondSprite()
-        buildFireSprite()
+        buildStatueSprite(gameStatues: (game?.statues)!)
+        buildRubbleSprite(gameRubbles: (game?.rubbles)!)
+        buildBananaSprite(gameBananas: (game?.bananas)!)
+        buildDiamondSprite(gameDiamonds: (game?.diamonds)!)
+        buildFireSprite(gameFires: (game?.morefire)!)
         addChild(scoreLabel)
         addChild(pauseButton)
         addChild(playButton)
@@ -177,20 +179,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     func collectDiamond(diamond : SKSpriteNode) {
-        let currentDiamond = game?.diamonds.filter{ $0.startPosX! == Double(diamond.position.x) }.first
+        let currentDiamond = game?.diamonds.filter{ $0.startPosX! == (diamond.userData?.value(forKey: "xPos") as? Double) }.first
         
         removeChildren(in: [diamond])
         if let index = diamonds.index(of: diamond) {
             diamonds.remove(at: index)
         }
         
-        /*
-        var diamondScore = currentDiamond?.score
-        score += 1
+        score += (currentDiamond?.score)!
         if (currentDiamond?.isFinal)! {
-            monkey?.physicsBody?.velocity.dx += 0.01
+            monkey?.physicsBody?.velocity.dx *= 1.1
+            changeInBackground *= 1.1
+            game!.nextLevel()
+            game?.createMoreSprites()
         }
- */
     }
 
     // MARK: buildSprites
@@ -235,8 +237,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             SKAction.animate(with: monkeyWalkingFrames, timePerFrame: 0.05, resize: false, restore: true)),
                     withKey:"walkingInPlaceMonkey")
     }
-    func buildStatueSprite() {
-        for statue in (game?.statues)! {
+    func buildStatueSprite(gameStatues: [Statue]) {
+        for statue in gameStatues {
             let statueSprite = SKSpriteNode(imageNamed: "statue_00")
             let statueWidth = statue.CGFloatWidth(oldHeight: statueSprite.size.height,
                                                   oldWidth: statueSprite.size.width)
@@ -253,8 +255,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(statueSprite)
         }
     }
-    func buildRubbleSprite() {
-        for rubble in (game?.rubbles)! {
+    func buildRubbleSprite(gameRubbles: [Rubble]) {
+        for rubble in gameRubbles {
             let rubbleSprite = SKSpriteNode(imageNamed: "statue_05")
             let rubbleWidth = rubble.CGFloatWidth(oldHeight: rubbleSprite.size.height, oldWidth: rubbleSprite.size.width)
             rubbleSprite.size = CGSize(width: rubbleWidth!, height: rubble.CGFloatHeight!)
@@ -270,8 +272,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(rubbleSprite)
         }
     }
-    func buildBananaSprite() {
-        for banana in (game?.bananas)! {
+    func buildBananaSprite(gameBananas: [Banana]) {
+        for banana in gameBananas {
             let bananaSprite = SKSpriteNode(imageNamed: "icon_jungle_bananabunch")
             let bananaWidth = banana.CGFloatWidth(oldHeight: bananaSprite.size.height, oldWidth: bananaSprite.size.width)
             bananaSprite.size = CGSize(width: bananaWidth!, height: banana.CGFloatHeight!)
@@ -288,8 +290,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             addChild(bananaSprite)
         }
     }
-    func buildDiamondSprite() {
-        for diamond in (game?.diamonds)! {
+    func buildDiamondSprite(gameDiamonds: [Diamond]) {
+        for diamond in gameDiamonds {
             var diamondSprite: SKSpriteNode!
             if diamond.isFinal {
                 diamondSprite = SKSpriteNode(imageNamed: "diamond_red")
@@ -300,6 +302,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let diamondWidth = diamond.CGFloatWidth(oldHeight: diamondSprite.size.height, oldWidth: diamondSprite.size.width)
             diamondSprite.size = CGSize(width: diamondWidth!, height: diamond.CGFloatHeight!)
             diamondSprite.position = CGPoint(x: diamond.startPosX!, y: diamond.startPosY!)
+            diamondSprite.userData = NSMutableDictionary()
+            diamondSprite.userData?.setValue(diamond.startPosX!, forKeyPath: "xPos")
             
             diamondSprite.physicsBody = SKPhysicsBody(rectangleOf: diamondSprite.size)
             diamondSprite.physicsBody?.isDynamic = false
@@ -313,8 +317,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func buildFireSprite() {
-        for fire in (game?.morefire)! {
+    func buildFireSprite(gameFires: [Fire]) {
+        for fire in gameFires {
             let fireSprite = SKSpriteNode(imageNamed: "fireball_1")
             let fireWidth = fire.CGFloatWidth(oldHeight: fireSprite.size.height, oldWidth: fireSprite.size.width)
             fireSprite.size = CGSize(width: fireWidth!, height: fire.CGFloatHeight!)
@@ -365,9 +369,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(ground)
     }
     
-    // Didn't work to create a variable for the movment of the background and statues
-    //let changeInBackground = 2.0
-    
     override func update(_ Time: CFTimeInterval) {
         
         if isPause || isGameOver {
@@ -376,24 +377,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Move the background and obstacles
         
-        background1.position = CGPoint(x: background1.position.x - 1, y: background2.position.y)
-        background2.position = CGPoint(x: background1.position.x - 1, y: background2.position.y)
+        background1.position = CGPoint(x: background1.position.x - CGFloat(changeInBackground), y: background2.position.y)
+        background2.position = CGPoint(x: background1.position.x - CGFloat(changeInBackground), y: background2.position.y)
 
         // Probably only want to do this for the visible ones, on screen
         for statue in statues {
-            statue.position = CGPoint(x: statue.position.x - 1, y: statue.position.y)
+            statue.position = CGPoint(x: statue.position.x - CGFloat(changeInBackground), y: statue.position.y)
         }
         for rubble in rubbles {
-            rubble.position = CGPoint(x: rubble.position.x - 1, y: rubble.position.y)
+            rubble.position = CGPoint(x: rubble.position.x - CGFloat(changeInBackground), y: rubble.position.y)
         }
         for banana in bananas {
-            banana.position = CGPoint(x: banana.position.x - 1, y: banana.position.y)
+            banana.position = CGPoint(x: banana.position.x - CGFloat(changeInBackground), y: banana.position.y)
         }
         for diamond in diamonds {
-            diamond.position = CGPoint(x: diamond.position.x - 1, y: diamond.position.y)
+            diamond.position = CGPoint(x: diamond.position.x - CGFloat(changeInBackground), y: diamond.position.y)
         }
         for fire in morefire {
-            fire.position = CGPoint(x: fire.position.x - 1, y: fire.position.y)
+            fire.position = CGPoint(x: fire.position.x - CGFloat(changeInBackground), y: fire.position.y)
         }
         
         if (monkey?.position.x)! < CGFloat(0) {
