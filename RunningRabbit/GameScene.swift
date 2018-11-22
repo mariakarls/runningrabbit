@@ -177,11 +177,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     func collectDiamond(diamond : SKSpriteNode) {
-        score += 1
+        let currentDiamond = game?.diamonds.filter{ $0.startPosX! == Double(diamond.position.x) }.first
+        
         removeChildren(in: [diamond])
         if let index = diamonds.index(of: diamond) {
             diamonds.remove(at: index)
         }
+        
+        /*
+        var diamondScore = currentDiamond?.score
+        score += 1
+        if (currentDiamond?.isFinal)! {
+            monkey?.physicsBody?.velocity.dx += 0.01
+        }
+ */
     }
 
     // MARK: buildSprites
@@ -212,7 +221,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         monkey?.physicsBody?.collisionBitMask = Game.PhysicsCategory.ground | Game.PhysicsCategory.statue | Game.PhysicsCategory.rubble | Game.PhysicsCategory.diamond
         monkey?.physicsBody?.affectedByGravity = true
         monkey?.physicsBody?.allowsRotation = false
-        monkey?.physicsBody?.velocity.dx = 15
+        monkey?.physicsBody?.velocity.dx = 1
         
         addChild(monkey!)
     }
@@ -367,24 +376,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Move the background and obstacles
         
-        background1.position = CGPoint(x: background1.position.x - 2, y: background2.position.y)
-        background2.position = CGPoint(x: background1.position.x - 2, y: background2.position.y)
+        background1.position = CGPoint(x: background1.position.x - 1, y: background2.position.y)
+        background2.position = CGPoint(x: background1.position.x - 1, y: background2.position.y)
 
         // Probably only want to do this for the visible ones, on screen
         for statue in statues {
-            statue.position = CGPoint(x: statue.position.x - 2, y: statue.position.y)
+            statue.position = CGPoint(x: statue.position.x - 1, y: statue.position.y)
         }
         for rubble in rubbles {
-            rubble.position = CGPoint(x: rubble.position.x - 2, y: rubble.position.y)
+            rubble.position = CGPoint(x: rubble.position.x - 1, y: rubble.position.y)
         }
         for banana in bananas {
-            banana.position = CGPoint(x: banana.position.x - 2, y: banana.position.y)
+            banana.position = CGPoint(x: banana.position.x - 1, y: banana.position.y)
         }
         for diamond in diamonds {
-            diamond.position = CGPoint(x: diamond.position.x - 2, y: diamond.position.y)
+            diamond.position = CGPoint(x: diamond.position.x - 1, y: diamond.position.y)
         }
         for fire in morefire {
-            fire.position = CGPoint(x: fire.position.x - 2, y: fire.position.y)
+            fire.position = CGPoint(x: fire.position.x - 1, y: fire.position.y)
         }
         
         if (monkey?.position.x)! < CGFloat(0) {
@@ -406,19 +415,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let level = gameViewController!.recorder.averagePower(forChannel: 0)
             if level > -10 {
                 let monkeyPositionX = monkey?.position.x
-                var nextFire = morefire[0]
-                for fire in morefire.sorted(by: { $0.position.x > $1.position.x }) {
-                    if fire.position.x < monkeyPositionX! {
-                        // Monkey has already gone past this fire
-                        continue
+                if (morefire.count>0) {
+                    var nextFire = morefire[0]
+                    for fire in morefire.sorted(by: { $0.position.x > $1.position.x }) {
+                        if fire.position.x < monkeyPositionX! {
+                            // Monkey has already gone past this fire
+                            continue
+                        }
+                        nextFire = fire
                     }
-                    nextFire = fire
-                }
-                if (nextFire.position.x - monkeyPositionX! < 100) {
-                    // Can only blow out next fire if close to it
-                    removeChildren(in: [nextFire])
-                    if let index = morefire.index(of: nextFire) {
-                        morefire.remove(at: index)
+                    if (nextFire.position.x - monkeyPositionX! < 100) {
+                        // Can only blow out next fire if close to it
+                        removeChildren(in: [nextFire])
+                        if let index = morefire.index(of: nextFire) {
+                            morefire.remove(at: index)
+                        }
                     }
                 }
             }

@@ -55,12 +55,12 @@ class Game {
         static let block21X : Double = 2030
         static let block22X : Double = 2060
         static let block23X : Double = 2090
-        static let block24X : Double = 3020
-        static let block25X : Double = 3050
-        static let block26X : Double = 3080
-        static let block27X : Double = 3110
-        static let block28X : Double = 3140
-        static let block29X : Double = 3200
+        static let block24X : Double = 2120
+        static let block25X : Double = 2150
+        static let block26X : Double = 2180
+        static let block27X : Double = 2210
+        static let block28X : Double = 2240
+        static let block29X : Double = 2200
         static let block30X : Double = 3300
     }
     
