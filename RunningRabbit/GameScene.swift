@@ -9,7 +9,8 @@
 import Foundation
 import SpriteKit
 import UIKit
-
+import AVFoundation
+import CoreAudio
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -61,6 +62,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     weak var gameViewController : GameViewController? = nil
+
+    let LEVEL_THRESHOLD: Float = -10.0
 
     private func setupHighScoreList() -> Array<HighScore> {
         var returnList = Array<HighScore>()
@@ -376,7 +379,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if(background2.position.x - frame.size.width < -background2.size.width) {
             background2.position = CGPoint(x: background1.position.x + background1.size.width - frame.size.width, y: background2.position.y )
         }
- 
+        
+        // Blow out the fire
+        if gameViewController!.audioSession!.recordPermission == AVAudioSession.RecordPermission.granted {
+            gameViewController!.recorder.updateMeters()
+            
+            let level = gameViewController!.recorder.averagePower(forChannel: 0)
+            if level > -10 {
+                
+            }
+        }
+
     }
     
 }

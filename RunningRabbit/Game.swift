@@ -52,11 +52,13 @@ class Game {
         self.diamonds = [Diamond]()
         self.morefire = [Fire]()
 
+        /*
         self.setupStatues(statHeight: (self.monkey?.height)!)
         self.setupBananas(bananaHeight: screneHeight / 15)
         self.setupRubbles(rubbleHeight: (self.monkey?.height)!/3)
         self.setupDiamonds(diamondHeight: (self.monkey?.height)!/3) //maybe change
         self.setupFire(fireHeight: (self.monkey?.height)!/3) //maybe change
+ */
     }
 
     private func setupFire (fireHeight: Double) {
