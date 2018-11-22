@@ -45,6 +45,7 @@
 		4C146486219629310059F2D7 /* Banana.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banana.swift; sourceTree = "<group>"; };
 		4C14648821977D3E0059F2D7 /* Sprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprite.swift; sourceTree = "<group>"; };
 		4C14648A2197886B0059F2D7 /* Rubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rubble.swift; sourceTree = "<group>"; };
+		4C238E5F21A68F7100FE5F0E /* FireImages.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = FireImages.atlas; sourceTree = "<group>"; };
 		4C3887D22191802C001CA924 /* Platformer_woodland_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Platformer_woodland_images; sourceTree = "<group>"; };
 		4C3887E021918073001CA924 /* Bonus_Items_images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Bonus_Items_images; sourceTree = "<group>"; };
 		4C39F77821A308D1003B9998 /* GameOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +112,7 @@
 		4CC0EE93216F255700246421 /* RunningRabbit */ = {
 			isa = PBXGroup;
 			children = (
-				59AC418221A048F90012884A /* FireImages.atlas */,
+				4C238E5F21A68F7100FE5F0E /* FireImages.atlas */,
 				4CE85CAF21942752002970DE /* MonkeyImages.atlas */,
 				4CE85C9521941EB6002970DE /* JungleMonkeyImages */,
 				4C3887E021918073001CA924 /* Bonus_Items_images */,
@@ -159,13 +160,6 @@
 				4CE85C9621941EF7002970DE /* Icons_Jungle_images */,
 			);
 			path = JungleMonkeyImages;
-			sourceTree = "<group>";
-		};
-		59AC418221A048F90012884A /* FireImages.atlas */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FireImages.atlas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
