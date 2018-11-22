@@ -43,6 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var isGameOver = false {
         didSet {
             if isGameOver {
+                isPause = true
                 var highScoreList = HighScore.getData(from: userDefaults)
                 if (highScoreList == nil) {
                     // First time user runs the app, we need to store datastructure to be able to keep high scores
@@ -136,7 +137,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 playButton.isHidden = !playButton.isHidden
                 monkey?.isPaused = !(monkey?.isPaused)!
             } else {
-                if !isPause {
+                if !isPause && monkey?.physicsBody?.velocity.dy == 0 {
+                    // Don't want the monkey being able to jump while in the air
                     monkeyJump()
                 }
             }
@@ -144,7 +146,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func monkeyJump() {
-        monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/500, dy: (game?.statueHeight)!/2.0))
+        monkey?.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 45))
+        //monkey?.physicsBody?.applyImpulse(CGVector(dx: (game?.width)!/500, dy: (game?.statueHeight)!/2.0))
         // these values seem to work well on iPhone X but not on iPad
     }
     
@@ -157,6 +160,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let banana = contact.bodyB.node as? SKSpriteNode {
                 collectBanana(banana: banana)
             }
+        } else if (bodyA == Game.PhysicsCategory.monkey && bodyB == Game.PhysicsCategory.diamond) {
+            if let diamond = contact.bodyB.node as? SKSpriteNode {
+                collectDiamond(diamond: diamond)
+            }
         } else if (bodyA == Game.PhysicsCategory.monkey && bodyB == Game.PhysicsCategory.fire) {
             isGameOver = true
         }
@@ -167,6 +174,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         removeChildren(in: [banana])
         if let index = bananas.index(of: banana) {
             bananas.remove(at: index)
+        }
+    }
+    func collectDiamond(diamond : SKSpriteNode) {
+        score += 1
+        removeChildren(in: [diamond])
+        if let index = diamonds.index(of: diamond) {
+            diamonds.remove(at: index)
         }
     }
 
@@ -198,7 +212,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         monkey?.physicsBody?.collisionBitMask = Game.PhysicsCategory.ground | Game.PhysicsCategory.statue | Game.PhysicsCategory.rubble | Game.PhysicsCategory.diamond
         monkey?.physicsBody?.affectedByGravity = true
         monkey?.physicsBody?.allowsRotation = false
-        monkey?.physicsBody?.velocity.dx = 20
+        monkey?.physicsBody?.velocity.dx = 15
         
         addChild(monkey!)
     }
@@ -267,14 +281,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func buildDiamondSprite() {
         for diamond in (game?.diamonds)! {
-            let diamondSprite = SKSpriteNode(imageNamed: "diamond_blue")
+            var diamondSprite: SKSpriteNode!
+            if diamond.isFinal {
+                diamondSprite = SKSpriteNode(imageNamed: "diamond_red")
+            } else {
+                diamondSprite = SKSpriteNode(imageNamed: "diamond_blue")
+            }
+
             let diamondWidth = diamond.CGFloatWidth(oldHeight: diamondSprite.size.height, oldWidth: diamondSprite.size.width)
             diamondSprite.size = CGSize(width: diamondWidth!, height: diamond.CGFloatHeight!)
             diamondSprite.position = CGPoint(x: diamond.startPosX!, y: diamond.startPosY!)
             
             diamondSprite.physicsBody = SKPhysicsBody(rectangleOf: diamondSprite.size)
             diamondSprite.physicsBody?.isDynamic = false
-            diamondSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.banana //change to diamond
+            diamondSprite.physicsBody?.categoryBitMask = Game.PhysicsCategory.diamond
             diamondSprite.physicsBody?.affectedByGravity = false
             diamondSprite.physicsBody?.restitution = 0
             diamondSprite.physicsBody?.contactTestBitMask = Game.PhysicsCategory.monkey
@@ -331,7 +351,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.lineWidth = 5
         ground.physicsBody = SKPhysicsBody(edgeChainFrom: ground.path!)
         ground.physicsBody?.categoryBitMask = Game.PhysicsCategory.ground
-        ground.physicsBody?.restitution = 0.75
         ground.physicsBody?.isDynamic = false
         ground.physicsBody?.restitution = 0
         addChild(ground)
@@ -386,7 +405,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             let level = gameViewController!.recorder.averagePower(forChannel: 0)
             if level > -10 {
-                
+                let monkeyPositionX = monkey?.position.x
+                var nextFire = morefire[0]
+                for fire in morefire.sorted(by: { $0.position.x > $1.position.x }) {
+                    if fire.position.x < monkeyPositionX! {
+                        // Monkey has already gone past this fire
+                        continue
+                    }
+                    nextFire = fire
+                }
+                if (nextFire.position.x - monkeyPositionX! < 100) {
+                    // Can only blow out next fire if close to it
+                    removeChildren(in: [nextFire])
+                    if let index = morefire.index(of: nextFire) {
+                        morefire.remove(at: index)
+                    }
+                }
             }
         }
 

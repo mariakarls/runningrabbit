@@ -10,4 +10,16 @@ import Foundation
 
 class Diamond : Sprite {
     
+    var isFinal = false
+    
+    var score = 5
+    
+    public func updateScore() {
+        score = score * 2
+    }
+    
+    init(height: Double, x: Double?, y: Double?, isFinal: Bool?) {
+        super.init(height: height, x: x, y: y)
+        self.isFinal = isFinal!
+    }
 }

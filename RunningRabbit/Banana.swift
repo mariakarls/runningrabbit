@@ -10,4 +10,9 @@ import Foundation
 
 class Banana : Sprite {
     
+    var score = 1
+    
+    public func updateScore() {
+        score = score * 2
+    }
 }
